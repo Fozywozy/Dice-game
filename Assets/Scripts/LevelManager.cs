@@ -4,23 +4,18 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    public static Dictionary<SceneTile, Vector4> LinkNodes = new Dictionary<SceneTile, Vector4>
-    {
-
-    };
-
-    public LevelSave LevelData = new LevelSave();
+    public LevelSave LevelData;
 
 
     public void Start()
     {
-
+        LevelData = new LevelSave();
     }
 
 
-    public void LoadLevel(SceneTile C_ExitNode)
+    public void LoadLevel(EntryExitNode C_Node)
     {
-        LevelData = LevelCatalogue.GetLevelAtIndex((int)LinkNodes[C_ExitNode].w);
+        LevelData = LevelCatalogue.GetLevelAtIndex(C_Node.TileData.LevelTo);
         LevelData.GenerateAtPositionList();
     }
 }

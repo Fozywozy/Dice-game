@@ -11,11 +11,11 @@ public class LevelSave
     public List<StartEndNode> Nodes;
 
     [System.NonSerialized]
-    public Dictionary<Vector3, SceneTile> TileAtPosition;
+    public Dictionary<Vector3, SceneTile> TileAtPosition = new Dictionary<Vector3, SceneTile>();
     [System.NonSerialized]
-    public Dictionary<Vector3, Collectable> CollectableAtPosition;
+    public Dictionary<Vector3, Collectable> CollectableAtPosition = new Dictionary<Vector3, Collectable>();
     [System.NonSerialized]
-    public Dictionary<Vector3, StartEndNode> NodeAtPosition;
+    public Dictionary<Vector3, StartEndNode> NodeAtPosition = new Dictionary<Vector3, StartEndNode>();
 
     public void GenerateAtPositionList()
     {

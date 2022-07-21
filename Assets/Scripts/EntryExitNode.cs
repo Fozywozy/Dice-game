@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EntryExitNode : MonoBehaviour
 {
-    public EntryExitNode TileData;
+    public StartEndNode TileData;
 
     [SerializeField]
     private Material Ring;
