@@ -8,11 +8,14 @@ public class LevelSave
 {
     public List<SceneTile> Scenetiles;
     public List<Collectable> Collectables;
+    public List<StartEndNode> Nodes;
 
     [System.NonSerialized]
-    public Dictionary<Vector3, SceneTile> TileAtPosition = new Dictionary<Vector3, SceneTile>();
+    public Dictionary<Vector3, SceneTile> TileAtPosition;
     [System.NonSerialized]
-    public Dictionary<Vector3, Collectable> CollectableAtPosition = new Dictionary<Vector3, Collectable>();
+    public Dictionary<Vector3, Collectable> CollectableAtPosition;
+    [System.NonSerialized]
+    public Dictionary<Vector3, StartEndNode> NodeAtPosition;
 
     public void GenerateAtPositionList()
     {
@@ -33,6 +36,7 @@ public class LevelSave
             }
         }
 
+
         foreach (Collectable CollectableData in Collectables)
         {
             CollectableAtPosition.Add(CollectableData.Position, CollectableData);
@@ -40,18 +44,21 @@ public class LevelSave
     }
 
 
-    public LevelSave(List<SceneTile> C_Scenetiles = null, List<Collectable> C_Collectables = null)
+    public LevelSave(List<SceneTile> C_Scenetiles = null, List<Collectable> C_Collectables = null, List<StartEndNode> C_Nodes = null)
     {
         Scenetiles = C_Scenetiles ?? new List<SceneTile>();
         Collectables = C_Collectables ?? new List<Collectable>();
+        Nodes = C_Nodes ?? new List<StartEndNode>();
     }
 }
+
+
+
 
 
 [System.Serializable]
 public class SceneTile
 {
-    public int Level;
     public TileType Type;
     public Vector3 Position;
     public Vector3Int Scale;
@@ -70,13 +77,23 @@ public class SceneTile
 [System.Serializable]
 public class Collectable
 {
-    public AddressableReference MeshAddress;
-    public List<AddressableReference> MaterialReferences;
     public Vector3 Position;
     public CollectableType Type;
     public bool Collected;
 }
 
+
+[System.Serializable]
+public class StartEndNode
+{
+    public int LevelTo;
+    public Vector3 PositionTo;
+
+    public Vector3 Position;
+    public Vector3Int Scale;
+
+    public bool Standable = false;
+}
 
 public enum TileType
 {

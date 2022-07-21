@@ -16,6 +16,7 @@ public class CameraController : MonoBehaviour
     private void Start()
     {
         transform.eulerAngles = new Vector3(UDMouse, SSMouse, 0);
+        transform.position = Player.transform.position + (-5 * Zoom * transform.forward);
     }
 
     private void LateUpdate()

@@ -9,7 +9,7 @@ public class LevelManager : MonoBehaviour
 
     };
 
-    public LevelSave LevelData;
+    public LevelSave LevelData = new LevelSave();
 
 
     public void Start()
