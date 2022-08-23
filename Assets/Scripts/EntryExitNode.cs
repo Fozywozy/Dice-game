@@ -4,14 +4,20 @@ using UnityEngine;
 
 public class EntryExitNode : MonoBehaviour
 {
-    public StartEndNode TileData;
+    public IONode TileData;
 
     [SerializeField]
     private Material Ring;
 
-    void Update()
+    private void Start()
     {
-        float Percent = Time.fixedUnscaledTime * 0.8f % 1;
+        transform.position = TileData.Position;
+        transform.localScale = TileData.Scale;
+    }
+
+    private void Update()
+    {
+        float Percent = Time.fixedUnscaledTime * 0.2f % 1;
 
         int index = 0;
         foreach (Transform T in transform)

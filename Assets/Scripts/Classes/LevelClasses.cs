@@ -8,14 +8,14 @@ public class LevelSave
 {
     public List<SceneTile> Scenetiles;
     public List<Collectable> Collectables;
-    public List<StartEndNode> Nodes;
+    public List<IONode> Nodes;
 
     [System.NonSerialized]
     public Dictionary<Vector3, SceneTile> TileAtPosition = new Dictionary<Vector3, SceneTile>();
     [System.NonSerialized]
     public Dictionary<Vector3, Collectable> CollectableAtPosition = new Dictionary<Vector3, Collectable>();
     [System.NonSerialized]
-    public Dictionary<Vector3, StartEndNode> NodeAtPosition = new Dictionary<Vector3, StartEndNode>();
+    public Dictionary<Vector3, IONode> NodeAtPosition = new Dictionary<Vector3, IONode>();
 
     public void GenerateAtPositionList()
     {
@@ -41,19 +41,34 @@ public class LevelSave
         {
             CollectableAtPosition.Add(CollectableData.Position, CollectableData);
         }
+
+
+        foreach (IONode NodeData in Nodes)
+        {
+            Vector3 StartPosition = NodeData.Position - new Vector3(NodeData.Scale.x / 2f, NodeData.Scale.y / 2f, NodeData.Scale.z / 2f);
+            Vector3 EndPosition = NodeData.Position + new Vector3(NodeData.Scale.x / 2f, NodeData.Scale.y / 2f, NodeData.Scale.z / 2f);
+
+            for (float x = StartPosition.x; x < EndPosition.x; x++)
+            {
+                for (float y = StartPosition.y; y < EndPosition.y; y++)
+                {
+                    for (float z = StartPosition.z; z < EndPosition.z; z++)
+                    {
+                        NodeAtPosition.Add(new Vector3(x + 0.5f, y + 0.5f, z + 0.5f), NodeData);
+                    }
+                }
+            }
+        }
     }
 
 
-    public LevelSave(List<SceneTile> C_Scenetiles = null, List<Collectable> C_Collectables = null, List<StartEndNode> C_Nodes = null)
+    public LevelSave(List<SceneTile> C_Scenetiles = null, List<Collectable> C_Collectables = null, List<IONode> C_Nodes = null)
     {
         Scenetiles = C_Scenetiles ?? new List<SceneTile>();
         Collectables = C_Collectables ?? new List<Collectable>();
-        Nodes = C_Nodes ?? new List<StartEndNode>();
+        Nodes = C_Nodes ?? new List<IONode>();
     }
 }
-
-
-
 
 
 [System.Serializable]
@@ -65,11 +80,11 @@ public class SceneTile
 
     public bool Standable => Type == TileType.Null || Type == TileType.Scaffold;
 
-    public SceneTile(TileType C_Type, float C_xpos, float C_ypos, float C_zpos, int C_xscale = 1, int C_yscale = 1, int C_zscale = 1)
+    public SceneTile(TileType C_Type, float C_XPos, float C_YPos, float C_ZPos, int C_XScale = 1, int C_YScale = 1, int C_ZScale = 1)
     {
         Type = C_Type;
-        Position = new Vector3(C_xpos, C_ypos, C_zpos);
-        Scale = new Vector3Int(C_xscale, C_yscale, C_zscale);
+        Position = new Vector3(C_XPos, C_YPos, C_ZPos);
+        Scale = new Vector3Int(C_XScale, C_YScale, C_ZScale);
     }
 }
 
@@ -84,7 +99,7 @@ public class Collectable
 
 
 [System.Serializable]
-public class StartEndNode
+public class IONode
 {
     public int LevelTo;
     public Vector3 PositionTo;
@@ -93,14 +108,21 @@ public class StartEndNode
     public Vector3Int Scale;
 
     public bool Standable = false;
+
+    public IONode(int C_LevelTo, Vector3 C_PositionTo, float C_XPos, float C_YPos, float C_ZPos, int C_XScale = 1, int C_YScale = 1, int C_ZScale = 1)
+    {
+        LevelTo = C_LevelTo;
+        PositionTo = C_PositionTo;
+        Position = new Vector3(C_XPos, C_YPos, C_ZPos);
+        Scale = new Vector3Int(C_XScale, C_YScale, C_ZScale);
+    }
 }
 
 public enum TileType
 {
     Wall,
-    EntryNode,
-    Null,
     Scaffold,
+    Null,
 }
 
 

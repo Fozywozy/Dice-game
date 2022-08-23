@@ -12,6 +12,8 @@ public class Player : MonoBehaviour
     private Vector3 RotationChange;
     private Vector3 PositionChange;
 
+    private Vector3Int PredictedPosition => Vector3Int.RoundToInt(transform.position + PositionChange);
+
     public bool Updated => (PositionChange == Vector3.zero) && (RotationChange == Vector3.zero);
 
     public int SideUp = 1;
@@ -73,20 +75,9 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.W))
         {
             RotationChange = Board.transform.right * -90;
-            if (!LevelManager.LevelData.TileAtPosition[transform.position + new Vector3(0, 1, 0)].Standable)
+            if (!CheckCollision(PredictedPosition + new Vector3Int(0, 1, 0)))
             {
                 PositionChange = new Vector3(0, 1, 0);
-            }
-            for (int i = 1; i >= SideUp; i++)
-            {
-                if (LevelManager.LevelData.TileAtPosition[transform.position - (Board.transform.right * i) + new Vector3(0, PositionChange.y, 0)].Standable)
-                {
-                    break;
-                }
-                else
-                {
-                    PositionChange -= Board.transform.right;
-                }
             }
 
             PositionChange = Board.transform.right * -SideUp;
@@ -166,7 +157,68 @@ public class Player : MonoBehaviour
     }
 
 
-    public void TeleportTo(Vector3 Position, bool Animation, bool FadeToBlack)
+    public void CheckStandingOn()
+    {
+        if (LevelManager.LevelData.TileAtPosition.ContainsKey(PredictedPosition - new Vector3(0, 1, 0)))
+        {
+            switch (LevelManager.LevelData.TileAtPosition[PredictedPosition - new Vector3(0, 1, 0)].Type)
+            {
+                case TileType.Scaffold:
+                    BackToCheckpoint(false, false);
+                    break;
+            }
+        }
+
+        if (LevelManager.LevelData.NodeAtPosition.ContainsKey(PredictedPosition - new Vector3(0, 1, 0)))
+        {
+            LoadLevel(LevelManager.LevelData.NodeAtPosition[PredictedPosition - new Vector3(0, 1, 0)]);
+        }
+
+        else
+        {
+            Vector3Int YPositionChange = new Vector3Int();
+            for (int YMod = 0; YMod != 10; YMod++)
+            {
+                if (CheckCollision(Vector3Int.FloorToInt(PredictedPosition) - new Vector3Int(0, YMod, 0)))
+                {
+                    //Tile
+                    return;
+                }
+                else
+                {
+                    //No tile
+                    YPositionChange -= new Vector3Int(0, 1, 0);
+                }
+            }
+            BackToCheckpoint(true, false);
+        }
+    }
+
+
+    public bool CheckCollision(Vector3Int C_Position)
+    {
+        if (LevelManager.LevelData.TileAtPosition.ContainsKey(C_Position))
+        {
+            return LevelManager.LevelData.TileAtPosition[C_Position].Standable;
+        }
+
+        if (LevelManager.LevelData.NodeAtPosition.ContainsKey(C_Position))
+        {
+            return true;
+        }
+        return false;
+    }
+
+
+
+
+
+    public void BackToCheckpoint(bool C_Wait, bool C_FadeToBlack)
+    {
+
+    }
+
+    public void LoadLevel(IONode C_SteppedOn)
     {
 
     }
