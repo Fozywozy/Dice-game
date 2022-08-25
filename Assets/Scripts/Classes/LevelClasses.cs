@@ -2,23 +2,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[System.Serializable]
 public class LevelSave
 {
     public List<SceneTile> Scenetiles;
     public List<Collectable> Collectables;
     public List<IONode> Nodes;
     public List<TextPoint> TextPoints;
+    public List<DangerTile> DangerTiles;
 
-    [System.NonSerialized]
     public Dictionary<Vector3Int, SceneTile> TileAtPosition = new Dictionary<Vector3Int, SceneTile>();
-    [System.NonSerialized]
     public Dictionary<Vector3Int, Collectable> CollectableAtPosition = new Dictionary<Vector3Int, Collectable>();
-    [System.NonSerialized]
     public Dictionary<Vector3Int, IONode> NodeAtPosition = new Dictionary<Vector3Int, IONode>();
-    [System.NonSerialized]
     public Dictionary<Vector3Int, TextPoint> TextPointAtPosition = new Dictionary<Vector3Int, TextPoint>();
-
+    public Dictionary<Vector3Int, DangerTile> DangerTileAtPosition = new Dictionary<Vector3Int, DangerTile>();
 
     public void GenerateAtPositionList()
     {
@@ -26,6 +22,7 @@ public class LevelSave
         CollectableAtPosition = new Dictionary<Vector3Int, Collectable>();
         NodeAtPosition = new Dictionary<Vector3Int, IONode>();
         TextPointAtPosition = new Dictionary<Vector3Int, TextPoint>();
+        DangerTileAtPosition = new Dictionary<Vector3Int, DangerTile>();
 
         foreach (SceneTile TileData in Scenetiles)
         {
@@ -181,6 +178,16 @@ public class TextPoint
 }
 
 
+public class DangerTile
+{
+    public Vector3 Position;
+    public Vector3Int Scale;
+    public List<float> TimesBetween;
+
+    public bool Dangerous;
+}
+
+
 public enum TileType
 {
     Wall,
@@ -197,7 +204,15 @@ public enum CollectableType
 }
 
 
-public class LevelCatalogue
+public enum BackgroundType
+{
+    Boxy,
+    Clouds,
+
+}
+
+
+public static class LevelCatalogue
 {
     //Start level
     public static LevelSave LevelZero = new LevelSave(
@@ -233,6 +248,10 @@ public class LevelCatalogue
         new List<IONode>
         {
             new IONode(1, 0, 0, 0, 0, -1, -3),
+        },
+        new List<TextPoint>
+        {
+
         });
 
     public static LevelSave GetLevelAtIndex(int C_Index)
