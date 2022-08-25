@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
@@ -7,8 +5,8 @@ public class CameraController : MonoBehaviour
     private GameObject Player => GameObject.FindGameObjectWithTag("Player");
     private GameObject Board => GameObject.FindGameObjectWithTag("Move board");
 
-    private float UDMouse = 0;
-    private float SSMouse = 180;
+    private float UDMouse = 45;
+    private float SSMouse = 135;
     private float Zoom = 1;
 
     public bool FollowPlayer;

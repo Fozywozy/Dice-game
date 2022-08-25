@@ -1,18 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class EntryExitNode : MonoBehaviour
+public class ExitNodeScript : MonoBehaviour
 {
     public IONode TileData;
 
-    [SerializeField]
-    private Material Ring;
-
-    private void Start()
+    public void Bootup(IONode C_TileData)
     {
-        transform.position = TileData.Position;
-        transform.localScale = TileData.Scale;
+        TileData = C_TileData;
+        transform.position = C_TileData.Position;
+        transform.localScale = C_TileData.Scale;
     }
 
     private void Update()

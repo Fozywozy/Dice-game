@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -12,7 +10,7 @@ public class Player : MonoBehaviour
     private Vector3 RotationChange;
     private Vector3 PositionChange;
 
-    private Vector3Int PredictedPosition => Vector3Int.RoundToInt(transform.position + PositionChange);
+    private Vector3 PredictedPosition => transform.position + PositionChange;
 
     public bool Updated => (PositionChange == Vector3.zero) && (RotationChange == Vector3.zero);
 
@@ -40,6 +38,7 @@ public class Player : MonoBehaviour
             {
                 Vector3 NewRotation = new Vector3(90 * Mathf.RoundToInt(transform.eulerAngles.x / 90f), 90 * Mathf.RoundToInt(transform.eulerAngles.y / 90f), 90 * Mathf.RoundToInt(transform.eulerAngles.z / 90f));
                 transform.eulerAngles = NewRotation;
+                transform.position = Vector3Int.RoundToInt(transform.position);
                 CheckSide();
             }
         }
@@ -58,8 +57,9 @@ public class Player : MonoBehaviour
 
             if (PositionChange == Vector3.zero)
             {
-                Vector3 NewPosition = Vector3Int.RoundToInt(transform.position);
+                Vector3 NewPosition = transform.position;
                 transform.position = NewPosition;
+                CheckStandingOn();
             }
         }
 
@@ -75,44 +75,33 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.W))
         {
             RotationChange = Board.transform.right * -90;
-            if (!CheckCollision(PredictedPosition + new Vector3Int(0, 1, 0)))
+            if (!CheckCollision(Vector3Int.RoundToInt(PredictedPosition + new Vector3(0, 1, 0))))
             {
                 PositionChange = new Vector3(0, 1, 0);
             }
-
-            PositionChange = Board.transform.right * -SideUp;
-        }
-
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            RotationChange = Board.transform.right * 90;
-            if (!LevelManager.LevelData.TileAtPosition[transform.position + new Vector3(0, 1, 0)].Standable)
+            for (int i = 1; i <= SideUp; i++)
             {
-                PositionChange = new Vector3(0, 1, 0);
-            }
-            for (int i = 1; i >= SideUp; i++)
-            {
-                if (LevelManager.LevelData.TileAtPosition[transform.position + (Board.transform.right * i) + new Vector3(0, PositionChange.y, 0)].Standable)
+                if (CheckCollision(Vector3Int.RoundToInt(PredictedPosition - Board.transform.forward)))
                 {
                     break;
                 }
                 else
                 {
-                    PositionChange += Board.transform.right;
+                    PositionChange -= Board.transform.forward;
                 }
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.S))
         {
-            RotationChange = Board.transform.forward * 90;
-            if (!LevelManager.LevelData.TileAtPosition[transform.position + new Vector3(0, 1, 0)].Standable)
+            RotationChange = Board.transform.right * 90;
+            if (!CheckCollision(Vector3Int.RoundToInt(PredictedPosition + new Vector3(0, 1, 0))))
             {
                 PositionChange = new Vector3(0, 1, 0);
             }
-            for (int i = 1; i >= SideUp; i++)
+            for (int i = 1; i <= SideUp; i++)
             {
-                if (LevelManager.LevelData.TileAtPosition[transform.position + (Board.transform.forward * i) + new Vector3(0, PositionChange.y, 0)].Standable)
+                if (CheckCollision(Vector3Int.RoundToInt(PredictedPosition + Board.transform.forward)))
                 {
                     break;
                 }
@@ -123,22 +112,102 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.D))
         {
-            RotationChange = Board.transform.forward * -90;
-            if (!LevelManager.LevelData.TileAtPosition[transform.position + new Vector3(0, 1, 0)].Standable)
+            RotationChange = Board.transform.forward * 90;
+            if (!CheckCollision(Vector3Int.RoundToInt(PredictedPosition + new Vector3(0, 1, 0))))
             {
                 PositionChange = new Vector3(0, 1, 0);
             }
-            for (int i = 1; i >= SideUp; i++)
+            for (int i = 1; i <= SideUp; i++)
             {
-                if (LevelManager.LevelData.TileAtPosition[transform.position - (Board.transform.forward * i) + new Vector3(0, PositionChange.y, 0)].Standable)
+                if (CheckCollision(Vector3Int.RoundToInt(PredictedPosition - Board.transform.right)))
+                {
+                    break;
+                }
+                else
+                {
+                    PositionChange -= Board.transform.right;
+                }
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            RotationChange = Board.transform.forward * -90;
+            if (!CheckCollision(Vector3Int.RoundToInt(PredictedPosition + new Vector3(0, 1, 0))))
+            {
+                PositionChange = new Vector3(0, 1, 0);
+            }
+            for (int i = 1; i <= SideUp; i++)
+            {
+                if (CheckCollision(Vector3Int.RoundToInt(PredictedPosition + Board.transform.right)))
+                {
+                    break;
+                }
+                else
+                {
+                    PositionChange += Board.transform.right;
+                }
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            for (int i = 1; i <= SideUp; i++)
+            {
+                if (CheckCollision(Vector3Int.RoundToInt(PredictedPosition - Board.transform.forward)))
                 {
                     break;
                 }
                 else
                 {
                     PositionChange -= Board.transform.forward;
+                }
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            for (int i = 1; i <= SideUp; i++)
+            {
+                if (CheckCollision(Vector3Int.RoundToInt(PredictedPosition + Board.transform.forward)))
+                {
+                    break;
+                }
+                else
+                {
+                    PositionChange += Board.transform.forward;
+                }
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            for (int i = 1; i <= SideUp; i++)
+            {
+                if (CheckCollision(Vector3Int.RoundToInt(PredictedPosition - Board.transform.right)))
+                {
+                    break;
+                }
+                else
+                {
+                    PositionChange -= Board.transform.right;
+                }
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            for (int i = 1; i <= SideUp; i++)
+            {
+                if (CheckCollision(Vector3Int.RoundToInt(PredictedPosition + Board.transform.right)))
+                {
+                    break;
+                }
+                else
+                {
+                    PositionChange += Board.transform.right;
                 }
             }
         }
@@ -159,47 +228,42 @@ public class Player : MonoBehaviour
 
     public void CheckStandingOn()
     {
-        if (LevelManager.LevelData.TileAtPosition.ContainsKey(PredictedPosition - new Vector3(0, 1, 0)))
+        if (LevelManager.LevelData.TileAtPosition.ContainsKey(Vector3Int.RoundToInt(PredictedPosition - new Vector3(0, 1, 0))))
         {
-            switch (LevelManager.LevelData.TileAtPosition[PredictedPosition - new Vector3(0, 1, 0)].Type)
+            //Tile beneath the player
+            switch (LevelManager.LevelData.TileAtPosition[Vector3Int.RoundToInt(PredictedPosition - new Vector3(0, 1, 0))].Type)
             {
                 case TileType.Scaffold:
                     BackToCheckpoint(false, false);
                     break;
             }
         }
-
-        if (LevelManager.LevelData.NodeAtPosition.ContainsKey(PredictedPosition - new Vector3(0, 1, 0)))
+        else if (LevelManager.LevelData.NodeAtPosition.ContainsKey(Vector3Int.RoundToInt(PredictedPosition - new Vector3(0, 1, 0))))
         {
-            LoadLevel(LevelManager.LevelData.NodeAtPosition[PredictedPosition - new Vector3(0, 1, 0)]);
+            //Node beneath the player
+            Debug.Log("Finished");
+            LevelManager.LoadLevel(LevelManager.LevelData.NodeAtPosition[Vector3Int.RoundToInt(PredictedPosition - new Vector3(0, 1, 0))]);
         }
-
         else
         {
-            Vector3Int YPositionChange = new Vector3Int();
-            for (int YMod = 0; YMod != 10; YMod++)
-            {
-                if (CheckCollision(Vector3Int.FloorToInt(PredictedPosition) - new Vector3Int(0, YMod, 0)))
-                {
-                    //Tile
-                    return;
-                }
-                else
-                {
-                    //No tile
-                    YPositionChange -= new Vector3Int(0, 1, 0);
-                }
-            }
-            BackToCheckpoint(true, false);
+            //No tile or node beneath the player
+            PositionChange -= new Vector3(0, 1, 0);
+        }
+
+        if (LevelManager.LevelData.NodeAtPosition.ContainsKey(Vector3Int.RoundToInt(PredictedPosition)))
+        {
+
         }
     }
 
-
+    /// <summary>
+    /// Returns true if a physical tile exists at the position
+    /// </summary>
     public bool CheckCollision(Vector3Int C_Position)
     {
         if (LevelManager.LevelData.TileAtPosition.ContainsKey(C_Position))
         {
-            return LevelManager.LevelData.TileAtPosition[C_Position].Standable;
+            return LevelManager.LevelData.TileAtPosition[C_Position].Solid;
         }
 
         if (LevelManager.LevelData.NodeAtPosition.ContainsKey(C_Position))
@@ -210,15 +274,7 @@ public class Player : MonoBehaviour
     }
 
 
-
-
-
     public void BackToCheckpoint(bool C_Wait, bool C_FadeToBlack)
-    {
-
-    }
-
-    public void LoadLevel(IONode C_SteppedOn)
     {
 
     }

@@ -1,9 +1,7 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
-
 
 public class AddressableListReference<T> where T : class
 {
@@ -14,7 +12,7 @@ public class AddressableListReference<T> where T : class
     /// </summary>
     public void RemoveAssetAtPath(AddressableReference C_Path)
     {
-        GetAddressable<T> Address = GetAtPath(C_Path);
+        GetAddressable<T> Address = GetAssetAtPath(C_Path);
 
         if (C_Path == Address.Path)
         {
@@ -33,9 +31,9 @@ public class AddressableListReference<T> where T : class
     /// <summary>
     /// Returns the Mesh at the given path, returns null if it isn't loaded yet, does not modify anything.
     /// </summary>
-    public T ReturnMeshAtPath(AddressableReference C_Path) //Checks if it got the mesh, if it has, it returns it
+    public T ReturnAssetAtPath(AddressableReference C_Path)
     {
-        GetAddressable<T> Address = GetAtPath(C_Path);
+        GetAddressable<T> Address = GetAssetAtPath(C_Path);
 
         if (C_Path == Address.Path)
         {
@@ -57,9 +55,9 @@ public class AddressableListReference<T> where T : class
     /// <summary>
     /// Starts loading the Mesh at the given path. If it is already loading, it adds one to the requested count
     /// </summary>
-    public T NewMeshAtPath(AddressableReference C_Path)
+    public T NewAssetAtPath(AddressableReference C_Path)
     {
-        GetAddressable<T> Address = GetAtPath(C_Path);
+        GetAddressable<T> Address = GetAssetAtPath(C_Path);
 
         if (C_Path == Address.Path)
         {
@@ -79,7 +77,7 @@ public class AddressableListReference<T> where T : class
     }
 
 
-    private GetAddressable<T> GetAtPath(AddressableReference C_Path)
+    private GetAddressable<T> GetAssetAtPath(AddressableReference C_Path)
     {
         foreach (GetAddressable<T> Address in AddressableAssets)
         {
