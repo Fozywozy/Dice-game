@@ -6,6 +6,13 @@ TagManager:
   tags:
   - Move board
   - Level manager
+  - Textbox Manager
+  - Exit beam
+  - Splash
+  - Fog Manager
+  - Canvas
+  - Raycast Manager
+  - Music Manager
   layers:
   - Default
   - TransparentFX
@@ -13,7 +20,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Background
   - 
   - 
   - 

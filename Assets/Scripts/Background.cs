@@ -6,6 +6,9 @@ public class Background : MonoBehaviour
 {
     private BackgroundType Mode;
 
+    private GameObject BoxyObject => transform.GetChild(0).gameObject;
+    private GameObject MainCamera => GameObject.FindGameObjectWithTag("MainCamera");
+
     //Boxy
     public float VelBoundry = 0.1f;
     public float ScaleRandom = 5f;
@@ -15,10 +18,20 @@ public class Background : MonoBehaviour
     public void SetMode(BackgroundType C_NewMode)
     {
         Mode = C_NewMode;
-        transform.rotation = new Quaternion(0, 0, 0, 0);
+        switch (C_NewMode)
+        {
+            case BackgroundType.Boxy:
+                transform.SetParent(MainCamera.transform);
+
+                break;
+            case BackgroundType.Sky:
+                transform.SetParent(null);
+
+                break;
+        }
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         switch (Mode)
         {
@@ -35,10 +48,10 @@ public class Background : MonoBehaviour
 
                 if (RotationVelocity.z > VelBoundry) { RotationVelocity.z = VelBoundry; }
                 if (RotationVelocity.z < -VelBoundry) { RotationVelocity.z = -VelBoundry; }
+                BoxyObject.transform.Rotate(RotationVelocity);
 
-                transform.Rotate(RotationVelocity);
                 break;
-            case BackgroundType.Clouds:
+            case BackgroundType.Sky:
 
                 break;
         }

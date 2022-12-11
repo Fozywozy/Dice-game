@@ -41,6 +41,50 @@ MonoBehaviour:
     m_Address: System:Cube
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: e82d14def31b74b38ae839ec45c46c58
+    m_Address: Opaque:Shiny yellow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 4f07bde63ff594c76829d0087cf02b70
+    m_Address: Collectable:Coin
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: f33a874fc04354bb6b98fc92babe183e
+    m_Address: IONode:Blank
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 94c524dcc9999473ba6f7415ecda9dda
+    m_Address: Opaque:Dull white
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: a8483942ca7104b0bb07126d11b6455d
+    m_Address: Opaque:Shiny white
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 20f94768685f3403b87f8fb3d2a50e84
+    m_Address: Opaque:Dull gray
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: a9a14b4af62264d98b6312a635c6fd92
+    m_Address: Transparent:Shiny red
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 66e2bce01a2a44ec39482e6756e87d15
+    m_Address: Transparent:Shiny yellow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 5b1be02bd086940278a743d4039a28f1
+    m_Address: TO:Shiny red
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: c972bf29e6364402297d0ed69d6549dd
+    m_Address: TO:Shiny green
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: a836a9394f11941fa9390c39a7f66739
+    m_Address: TO:Shiny yellow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 39308582621394149a08b16ac1c445a4, type: 2}
   m_SchemaSet:
