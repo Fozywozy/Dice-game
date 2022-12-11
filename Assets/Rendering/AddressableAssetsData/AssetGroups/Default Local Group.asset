@@ -85,6 +85,18 @@ MonoBehaviour:
     m_Address: TO:Shiny yellow
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 58fe962859a0143c390b2621314d7e3d
+    m_Address: Tile:Grass
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: b252a1b898a864d82bcb343d328f6ed4
+    m_Address: System:Lightning
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 6245187c47b1d420fb18cad4c8baaaa8
+    m_Address: System:LightningBolt
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 39308582621394149a08b16ac1c445a4, type: 2}
   m_SchemaSet:

@@ -604,7 +604,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &160993408
 MonoBehaviour:
@@ -626,7 +626,7 @@ MonoBehaviour:
   RenderingFeaturePrefab: {fileID: 6924353335073575078, guid: c5d6acbad55484aa4a98012099d11e3d, type: 3}
   Mode: 0
   LastPosition: {x: 0, y: 0, z: 0}
-  LastRotation: {x: 0, y: 0, z: 0}
+  Return: 0
   BootUp: 0
   Splash: 1
 --- !u!1 &211026667
@@ -998,7 +998,7 @@ Transform:
   m_Children:
   - {fileID: 456440791}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &361902814
 GameObject:
@@ -1840,7 +1840,7 @@ Transform:
   - {fileID: 705083012}
   - {fileID: 918245634}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &963194225
 GameObject:
@@ -2350,8 +2350,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 2086409189}
+  m_Children: []
   m_Father: {fileID: 842435705}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2423,7 +2422,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1168390253
 MonoBehaviour:
@@ -2437,8 +2436,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a508ea717db3b4fb186818cbfae9e7b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Song1: {fileID: 0}
-  Song2: {fileID: 0}
+  Song1: {fileID: 8300000, guid: 6e890b6c57bc041b8aad39f61e00b1d0, type: 3}
+  Song2: {fileID: 8300000, guid: d91498ec6db8e41d7943d3ef3bc11f91, type: 3}
 --- !u!82 &1168390254
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3004,7 +3003,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1537037980
 MonoBehaviour:
@@ -3830,8 +3829,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1160499654}
-  m_RootOrder: 0
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 160, y: 10, z: 0}
 --- !u!114 &2086409190
 MonoBehaviour:
@@ -3928,7 +3927,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &919132148949081708
 GameObject:

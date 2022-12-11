@@ -5,6 +5,7 @@ using UnityEngine;
 public class LevelSave
 {
     public BackgroundType BackgroundType;
+    public int SongIndex;
     public List<SceneTile> Scenetiles;
 
     public DictionaryList<Vector3Int, SceneTile> TileAtPosition = new DictionaryList<Vector3Int, SceneTile>();
@@ -43,11 +44,13 @@ public class LevelSave
     }
 
 
-    public LevelSave(BackgroundType C_BackgroundType, List<SceneTile> C_Scenetiles = null, Dictionary<TileMesh, MeshRenderingAsset> C_MeshAssignment = null)
+    public LevelSave(BackgroundType C_BackgroundType, int C_SongIndex, List<SceneTile> C_Scenetiles = null, Dictionary<TileMesh, MeshRenderingAsset> C_MeshAssignment = null)
     {
         BackgroundType = C_BackgroundType;
+        SongIndex = C_SongIndex;
         Scenetiles = C_Scenetiles ?? new List<SceneTile>();
-        MeshAssignment = C_MeshAssignment ?? new Dictionary<TileMesh, MeshRenderingAsset>
+
+        Dictionary<TileMesh, MeshRenderingAsset> DefaultDictionary = new Dictionary<TileMesh, MeshRenderingAsset>
         {
             //Default
             [TileMesh.Wall1] = new MeshRenderingAsset(new List<string> { "System", "Cube", "Opaque", "Shiny gray" }),
@@ -86,6 +89,28 @@ public class LevelSave
             [TileMesh.Piston3] = new MeshRenderingAsset(new List<string> { "System", "Cube", "Opaque", "Dull gray" }),
             [TileMesh.Piston4] = new MeshRenderingAsset(new List<string> { "System", "Cube", "Opaque", "Dull gray" }),
         };
+        Dictionary<TileMesh, MeshRenderingAsset> NewDicitonary = new Dictionary<TileMesh, MeshRenderingAsset>();
+
+        if (C_MeshAssignment == null)
+        {
+            NewDicitonary = DefaultDictionary;
+        }
+        else
+        {
+            foreach (TileMesh TileMesh in DefaultDictionary.Keys)
+            {
+                if (C_MeshAssignment.ContainsKey(TileMesh))
+                {
+                    NewDicitonary.Add(TileMesh, C_MeshAssignment[TileMesh]);
+                }
+                else
+                {
+                    NewDicitonary.Add(TileMesh, DefaultDictionary[TileMesh]);
+                }
+            }
+        }
+
+        MeshAssignment = NewDicitonary;
     }
 }
 
@@ -477,6 +502,7 @@ public static class LevelCatalogue
     //Initializing level
     public static LevelSave LevelZero = new LevelSave(
         BackgroundType.Boxy,
+        0,
         new List<SceneTile>
         {
             new Wall(TileType.Wall, TileMesh.Wall1, 0, -1, 0),
@@ -486,6 +512,7 @@ public static class LevelCatalogue
     //Start level
     public static LevelSave LevelOne = new LevelSave(
         BackgroundType.Boxy,
+        0,
         new List<SceneTile>
         {
             new Wall(TileType.Wall, TileMesh.Wall1, 0, -1, 0, 9, 1, 9),
@@ -499,13 +526,20 @@ public static class LevelCatalogue
     //Level one
     public static LevelSave LevelTwo = new LevelSave(
         BackgroundType.Boxy,
+        0,
         new List<SceneTile>
         {
             new Wall(TileType.Wall, TileMesh.Wall1, 0, -1, 0, 5, 1, 5),
             new Wall(TileType.Wall, TileMesh.Wall1, 0, 0, 4, 3, 1, 3),
             new IONode(2, 1, 0, 0, TileMesh.IONode1, 0, -1, -3),
             new DangerTile(new List<float> { 0.5f, 2 }, 1, 0, 1),
+            new RenderType(RenderingType.LightningBolt, TileMesh.Wall16, 1, 0, 1),
             new PushTile(new List<float> { 1f, 1f }, new List<Vector3Int> { Vector3Int.right, Vector3Int.left }, -1, 0, 1),
+        },
+        new Dictionary<TileMesh, MeshRenderingAsset>
+        {
+            [TileMesh.Wall16] = new MeshRenderingAsset(new List<string> { "System", "LightningBolt", "System", "Lightning", "System", "Lightning" }),
+
         });
 
     public static LevelSave GetLevelAtIndex(int C_Index)
@@ -516,7 +550,7 @@ public static class LevelCatalogue
             1 => LevelOne,
             2 => LevelTwo,
 
-            _ => new LevelSave(BackgroundType.Boxy, new List<SceneTile>()),
+            _ => new LevelSave(BackgroundType.Boxy, 0, new List<SceneTile>()),
         };
     }
 }

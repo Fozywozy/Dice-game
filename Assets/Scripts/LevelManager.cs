@@ -7,6 +7,7 @@ public class LevelManager : MonoBehaviour
     private GameObject PlayerObject => GameObject.FindGameObjectWithTag("Player");
     private ExitBeam ExitBeam => GameObject.FindGameObjectWithTag("Exit beam").GetComponent<ExitBeam>();
     private FogManager FogManager => GameObject.FindGameObjectWithTag("Fog Manager").GetComponent<FogManager>();
+    private MusicManager MusicManager => GameObject.FindGameObjectWithTag("Music Manager").GetComponent<MusicManager>();
     private GameObject Canvas => GameObject.FindGameObjectWithTag("Canvas");
 
     [SerializeField]
@@ -26,6 +27,8 @@ public class LevelManager : MonoBehaviour
 
     public LevelSave LevelData;
     public Vector3 LastPosition = Vector3.zero;
+
+    public bool Return;
 
     public bool BootUp = false;
     public bool Splash = true;
@@ -81,6 +84,7 @@ public class LevelManager : MonoBehaviour
         LevelData.GenerateAtPositionList();
         LastPosition = C_Position;
         PlayerObject.GetComponent<Player>().BackToCheckpoint();
+        MusicManager.PlaySong(LevelData.SongIndex);
 
         foreach (Transform T in transform)
         {
@@ -113,6 +117,52 @@ public class LevelManager : MonoBehaviour
                 CreateObject(TileData);
             }
         }
+    }
+
+
+    /// <summary>
+    /// For switching from menu mode to level mode
+    /// </summary>
+    public void LoadLevel(int C_Level, bool C_Return)
+    {
+        Return = C_Return;
+        LevelData = LevelCatalogue.GetLevelAtIndex(C_Level);
+        LevelData.GenerateAtPositionList();
+        ExitBeam.ExitAt(Vector3.zero);
+        Canvas.transform.GetChild(0).gameObject.SetActive(false);
+        Canvas.transform.GetChild(1).gameObject.SetActive(true);
+        PlayerObject.GetComponent<Player>().BackToCheckpoint();
+        MusicManager.PlaySong(LevelData.SongIndex);
+
+        foreach (SceneTile TileData in LevelCatalogue.GetLevelAtIndex(C_Level).Scenetiles)
+        {
+            if (TileData.Breakable)
+            {
+                Vector3 StartPosition = TileData.Position - new Vector3(TileData.Scale.x / 2f, TileData.Scale.y / 2f, TileData.Scale.z / 2f);
+                Vector3 EndPosition = TileData.Position + new Vector3(TileData.Scale.x / 2f, TileData.Scale.y / 2f, TileData.Scale.z / 2f);
+
+                for (float x = StartPosition.x; x < EndPosition.x; x++)
+                {
+                    for (float y = StartPosition.y; y < EndPosition.y; y++)
+                    {
+                        for (float z = StartPosition.z; z < EndPosition.z; z++)
+                        {
+                            SceneTile New = TileData.Clone();
+                            New.Position = new Vector3(x + 0.5f, y + 0.5f, z + 0.5f);
+                            New.Scale = Vector3Int.one;
+                            CreateObject(New);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                CreateObject(TileData);
+            }
+        }
+
+        Mode = C_Return ? GameMode.LevelReturn : GameMode.LevelEndless;
+        FogManager.LerpTo(new Color(0.4f, 0.4f, 0.4f, 1), 1);
     }
 
 
@@ -189,6 +239,13 @@ public class LevelManager : MonoBehaviour
             case TileType.Checkpoint:
                 //Do nothing
                 break;
+
+            case TileType.RenderingFeature:
+                //Create a rendering feature prefab
+                GameObject NewRenderingFeature = Instantiate(RenderingFeaturePrefab, transform);
+                NewRenderingFeature.GetComponent<RenderTypeScript>().Bootup(C_TileData);
+                NewRenderingFeature.GetComponent<RenderTypeScript>().TileData.Parent = NewRenderingFeature;
+                break;
         }
     }
 
@@ -200,50 +257,6 @@ public class LevelManager : MonoBehaviour
         Canvas.transform.GetChild(1).gameObject.SetActive(false);
         Mode = GameMode.Menu;
         FogManager.LerpTo(new Color(0.32f, 0.4f, 0.4f, 1), 1);
-    }
-
-
-    /// <summary>
-    /// For switching from menu mode to level mode
-    /// </summary>
-    public void LoadLevel(int C_Level, bool C_Return)
-    {
-        LevelData = LevelCatalogue.GetLevelAtIndex(C_Level);
-        LevelData.GenerateAtPositionList();
-        ExitBeam.ExitAt(Vector3.zero);
-        Canvas.transform.GetChild(0).gameObject.SetActive(false);
-        Canvas.transform.GetChild(1).gameObject.SetActive(true);
-        PlayerObject.GetComponent<Player>().BackToCheckpoint();
-
-        foreach (SceneTile TileData in LevelCatalogue.GetLevelAtIndex(C_Level).Scenetiles)
-        {
-            if (TileData.Breakable)
-            {
-                Vector3 StartPosition = TileData.Position - new Vector3(TileData.Scale.x / 2f, TileData.Scale.y / 2f, TileData.Scale.z / 2f);
-                Vector3 EndPosition = TileData.Position + new Vector3(TileData.Scale.x / 2f, TileData.Scale.y / 2f, TileData.Scale.z / 2f);
-
-                for (float x = StartPosition.x; x < EndPosition.x; x++)
-                {
-                    for (float y = StartPosition.y; y < EndPosition.y; y++)
-                    {
-                        for (float z = StartPosition.z; z < EndPosition.z; z++)
-                        {
-                            SceneTile New = TileData.Clone();
-                            New.Position = new Vector3(x + 0.5f, y + 0.5f, z + 0.5f);
-                            New.Scale = Vector3Int.one;
-                            CreateObject(New);
-                        }
-                    }
-                }
-            }
-            else
-            {
-                CreateObject(TileData);
-            }
-        }
-
-        Mode = C_Return ? GameMode.LevelReturn : GameMode.LevelEndless;
-        FogManager.LerpTo(new Color(0.4f, 0.4f, 0.4f, 1), 1);
     }
 
 

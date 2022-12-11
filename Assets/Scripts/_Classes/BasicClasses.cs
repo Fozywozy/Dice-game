@@ -65,6 +65,7 @@ public class DictionaryList<TOne, TTwo>
             //Key exists
             List<TTwo> NewList = Dictionary[C_Key];
             NewList.Add(C_Input);
+            Dictionary.Remove(C_Key);
             Dictionary.Add(C_Key, NewList);
             Output = true;
         }
@@ -220,6 +221,7 @@ public class TriggerableTimerComplete : TriggerableClass
     public SceneTile TileData;
     public int Index;
 
+    private LevelManager LevelManager => GameObject.FindGameObjectWithTag("Level manager").GetComponent<LevelManager>();
     private Player PlayerScript => GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
 
     public override void Trigger(bool C_Active)
@@ -229,6 +231,14 @@ public class TriggerableTimerComplete : TriggerableClass
             PlayerScript.TimerCompleted(this);
         }
         Timer.PlayAnimation();
+        List<SceneTile> Tiles = LevelManager.LevelData.TilesAt(Vector3Int.RoundToInt(TileData.Position));
+        foreach (SceneTile TileData in Tiles)
+        {
+            if (TileData.Type == TileType.RenderingFeature)
+            {
+                TileData.Parent.GetComponent<RenderTypeScript>().Trigger();
+            }
+        }
     }
 }
 
