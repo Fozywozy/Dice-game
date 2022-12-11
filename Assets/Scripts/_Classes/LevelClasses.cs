@@ -502,7 +502,7 @@ public static class LevelCatalogue
     //Initializing level
     public static LevelSave LevelZero = new LevelSave(
         BackgroundType.Boxy,
-        0,
+        1,
         new List<SceneTile>
         {
             new Wall(TileType.Wall, TileMesh.Wall1, 0, -1, 0),
@@ -512,7 +512,7 @@ public static class LevelCatalogue
     //Start level
     public static LevelSave LevelOne = new LevelSave(
         BackgroundType.Boxy,
-        0,
+        1,
         new List<SceneTile>
         {
             new Wall(TileType.Wall, TileMesh.Wall1, 0, -1, 0, 9, 1, 9),
@@ -526,7 +526,7 @@ public static class LevelCatalogue
     //Level one
     public static LevelSave LevelTwo = new LevelSave(
         BackgroundType.Boxy,
-        0,
+        1,
         new List<SceneTile>
         {
             new Wall(TileType.Wall, TileMesh.Wall1, 0, -1, 0, 5, 1, 5),
