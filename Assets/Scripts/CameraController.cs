@@ -49,17 +49,20 @@ public class CameraController : MonoBehaviour
 
     private void CheckInputs()
     {
-        Zoom += Input.mouseScrollDelta.y;
-        if (Zoom < 0.5f) { Zoom = 0.5f; }
-        if (Zoom > 2) { Zoom = 2; }
-
-        if (Input.GetKey(KeyCode.Mouse2))
+        if (Player.GetComponent<MeshRenderer>().enabled)
         {
-            UDMouse -= Input.GetAxis("Mouse Y") * 8;
-            SSMouse += Input.GetAxis("Mouse X") * 8;
-            if (UDMouse > 80) { UDMouse = 80; }
-            if (UDMouse < -80) { UDMouse = -80; }
-            transform.eulerAngles = new Vector3(UDMouse, SSMouse, 0);
+            Zoom += Input.mouseScrollDelta.y;
+            if (Zoom < 0.5f) { Zoom = 0.5f; }
+            if (Zoom > 2) { Zoom = 2; }
+
+            if (Input.GetKey(KeyCode.Mouse2))
+            {
+                UDMouse -= Input.GetAxis("Mouse Y") * 8;
+                SSMouse += Input.GetAxis("Mouse X") * 8;
+                if (UDMouse > 80) { UDMouse = 80; }
+                if (UDMouse < -80) { UDMouse = -80; }
+                transform.eulerAngles = new Vector3(UDMouse, SSMouse, 0);
+            }
         }
     }
 }

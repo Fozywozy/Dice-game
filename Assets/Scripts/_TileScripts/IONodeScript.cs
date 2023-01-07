@@ -12,6 +12,7 @@ public class IONodeScript : MonoBehaviour
         transform.position = C_TileData.Position;
         transform.localScale = C_TileData.Scale;
         GetComponent<TileLoader>().Bootup();
+
         if (TileData.MeshType != TileMesh.Blank)
         {
             transform.GetChild(0).GetComponent<TileRenderer>().BootUp(LevelManager.LevelData.MeshAssignment[C_TileData.MeshType]);
@@ -51,25 +52,5 @@ public class IONodeScript : MonoBehaviour
         {
             transform.GetChild(1).gameObject.SetActive(true);
         }
-    }
-
-    public void PlayerOn()
-    {
-
-    }
-
-    public void PlayerOff()
-    {
-
-    }
-
-    public void PlayerIn()
-    {
-
-    }
-
-    public void PlayerOut()
-    {
-
     }
 }

@@ -14,6 +14,14 @@ public class ExitBeam : MonoBehaviour
     private Transform DecorativeBeam2 => transform.GetChild(3);
 
     private bool Exiting = false;
+    private bool ReEntering = false;
+    private bool WaitBeforeEntering = false;
+
+    private Vector3? EndPoint = null;
+    private Vector3? StartPoint = null;
+
+    private Timer BeamTimer;
+    private Timer BeforeEntryTimer;
 
     private AnimationBrickList Beam1Animation = new(new List<AnimationBrick>
     {
@@ -44,55 +52,90 @@ public class ExitBeam : MonoBehaviour
 
     private void Update()
     {
-        Beam1Animation.SetValues(Beam1.gameObject, TimerManager.GetTimer("ExitBeam"), true, true, true, true);
-        Beam2Animation.SetValues(Beam2.gameObject, TimerManager.GetTimer("ExitBeam"), true, true, true, true);
-        DecorativeBeamAnimation.SetValues(DecorativeBeam1.gameObject, TimerManager.GetTimer("ExitBeam"), true, true, true, true);
-        DecorativeBeamAnimation.SetValues(DecorativeBeam2.gameObject, TimerManager.GetTimer("ExitBeam"), true, true, true, true);
+        Beam1Animation.SetValues(Beam1.gameObject, BeamTimer, true, true, true, true);
+        Beam2Animation.SetValues(Beam2.gameObject, BeamTimer, true, true, true, true);
+        DecorativeBeamAnimation.SetValues(DecorativeBeam1.gameObject, BeamTimer, true, true, true, true);
+        DecorativeBeamAnimation.SetValues(DecorativeBeam2.gameObject, BeamTimer, true, true, true, true);
 
-        if (TimerManager.GetTimer("ExitBeam"))
+        if (BeamTimer)
         {
+            //Finished
+
+            if (ReEntering)
+            {
+                EnterAt(LevelManager.LastPosition, WaitBeforeEntering);
+                return;
+            }
+
+            transform.position = Vector3.zero;
+
             if (Exiting)
             {
-                if (TimerManager.GetTimer("EntryBeam"))
-                {
-                    EnterAt(LevelManager.LastPosition);
-                }
+                //Exiting
+
+                enabled = false;
+                EndPoint = null;
+                StartPoint = null;
             }
             else
             {
+                //Entering
+
+                PlayerObject.transform.position = EndPoint.Value;
                 PlayerObject.GetComponent<MeshRenderer>().enabled = true;
                 PlayerObject.GetComponent<Player>().SideUp = 1;
                 Board.GetComponent<MeshRenderer>().enabled = true;
-                Exiting = false;
+                Board.transform.position = PlayerObject.transform.position + Vector3.down * 0.9f;
+
                 enabled = false;
+                EndPoint = null;
+                StartPoint = null;
+            }
+        }
+
+        if (!Exiting)
+        {
+            if (EndPoint != null && StartPoint != null)
+            {
+                PlayerObject.transform.position = Vector3.Lerp(StartPoint.Value, EndPoint.Value, BeforeEntryTimer);
             }
         }
     }
 
 
-    public void ExitAt(Vector3 C_Position)
+    public void ExitAt(Vector3 C_Position, bool C_LoadWait, bool C_ReEnter = true)
     {
         PlayerObject.GetComponent<MeshRenderer>().enabled = false;
+        PlayerObject.transform.eulerAngles = Vector3.zero;
         Board.GetComponent<MeshRenderer>().enabled = false;
         transform.position = C_Position;
-        TimerManager.NewTimer("ExitBeam", 0.5f);
-        TimerManager.NewTimer("EntryBeam", 2f);
+
+        BeamTimer = new Timer(0.5f);
+        WaitBeforeEntering = C_LoadWait;
+
         enabled = true;
         Exiting = true;
+        ReEntering = C_ReEnter;
     }
 
 
-    public void EnterAt(Vector3 C_Position)
+    public void EnterAt(Vector3 C_Position, bool C_LoadWait)
     {
-        PlayerObject.transform.position = C_Position;
-        PlayerObject.transform.eulerAngles = Vector3.zero;
-        PlayerObject.GetComponent<MeshRenderer>().enabled = false;
+        StartPoint = transform.position;
+        EndPoint = C_Position;
 
-        Board.transform.position = C_Position += Vector3.down * 0.9f;
+        PlayerObject.transform.position = transform.position;
+        PlayerObject.GetComponent<MeshRenderer>().enabled = false;
+        PlayerObject.transform.eulerAngles = Vector3.zero;
         Board.GetComponent<MeshRenderer>().enabled = false;
+
         transform.position = C_Position;
-        TimerManager.NewTimer("ExitBeam", 0.5f);
+
+        BeamTimer = new Timer(0.5f, C_LoadWait ? 2f : 0.75f);
+        BeforeEntryTimer = new Timer(0.5f, C_LoadWait ? 1.5f : 0.25f);
+
         enabled = true;
         Exiting = false;
+        ReEntering = false;
     }
 }

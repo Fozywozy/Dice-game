@@ -1,11 +1,13 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour
 {
-    private GameObject Splashscreen => GameObject.FindGameObjectWithTag("Splash");
-    private GameObject PlayerObject => GameObject.FindGameObjectWithTag("Player");
     private ExitBeam ExitBeam => GameObject.FindGameObjectWithTag("Exit beam").GetComponent<ExitBeam>();
+    private GameObject PlayerObject => GameObject.FindGameObjectWithTag("Player");
+    private Background BackgroundManager => GameObject.FindGameObjectWithTag("Background Manager").GetComponent<Background>();
     private FogManager FogManager => GameObject.FindGameObjectWithTag("Fog Manager").GetComponent<FogManager>();
     private MusicManager MusicManager => GameObject.FindGameObjectWithTag("Music Manager").GetComponent<MusicManager>();
     private GameObject Canvas => GameObject.FindGameObjectWithTag("Canvas");
@@ -30,68 +32,32 @@ public class LevelManager : MonoBehaviour
 
     public bool Return;
 
-    public bool BootUp = false;
-    public bool Splash = true;
-
-    public void Start()
-    {
-        if (!BootUp)
-        {
-            //DontDestroyOnLoad(this);
-            TimerManager.NewTimer("SplashFadeIn", 0.3f, 7);
-            TimerManager.NewTimer("TextFadeIn", 0.3f, 7.2f);
-            TimerManager.NewTimer("SplashFadeOut", 0.3f, 8.7f);
-            TimerManager.NewTimer("BlackroundFadeOut", 0.3f, 9.7f);
-        }
-    }
-
-
-    public void Update()
-    {
-        if (Splash)
-        {
-            Splashscreen.transform.GetChild(2).GetComponent<TMPro.TextMeshProUGUI>().color = new Color(1, 1, 1, TimerManager.GetTimer("TextFadeIn"));
-            Splashscreen.transform.GetChild(1).GetComponent<Image>().color = new Color(1, 1, 1, TimerManager.GetTimer("SplashFadeIn"));
-            if (TimerManager.GetTimer("SplashFadeOut").Active)
-            {
-                Splashscreen.transform.GetChild(2).GetComponent<TMPro.TextMeshProUGUI>().color = new Color(1, 1, 1, 1 - TimerManager.GetTimer("TextFadeIn"));
-                Splashscreen.transform.GetChild(1).GetComponent<Image>().color = new Color(1, 1, 1, 1 - TimerManager.GetTimer("SplashFadeOut"));
-            }
-
-            Splashscreen.transform.GetChild(0).GetComponent<Image>().color = new Color(0, 0, 0, 1 - TimerManager.GetTimer("BlackroundFadeOut"));
-
-            if (TimerManager.GetTimer("BlackroundFadeOut"))
-            {
-                //Splash Completed
-                Splashscreen.SetActive(false);
-                Splash = false;
-                TimerManager.RemoveTimer("SplashFadeIn");
-                TimerManager.RemoveTimer("TextFadeIn");
-                TimerManager.RemoveTimer("SplashFadeOut");
-                TimerManager.RemoveTimer("BlackroundFadeOut");
-            }
-        }
-    }
-
 
     /// <summary>
     /// For switching from level to level
     /// </summary>
     public void LoadLevel(int C_Level, Vector3Int C_Position)
     {
-        ExitBeam.ExitAt(PlayerObject.transform.position);
+        if (Return)
+        {
+            BackToMenu();
+            return;
+        }
+
         LevelData = LevelCatalogue.GetLevelAtIndex(C_Level);
-        LevelData.GenerateAtPositionList();
         LastPosition = C_Position;
-        PlayerObject.GetComponent<Player>().BackToCheckpoint();
+        PlayerObject.GetComponent<Player>().BackToCheckpoint(true);
         MusicManager.PlaySong(LevelData.SongIndex);
+        BackgroundManager.SetMode(LevelData.BackgroundType);
 
         foreach (Transform T in transform)
         {
             T.GetComponent<TileLoader>().LoadOut();
         }
 
-        foreach (SceneTile TileData in LevelCatalogue.GetLevelAtIndex(C_Level).Scenetiles)
+        List<SceneTile> NewScenetiles = new List<SceneTile>();
+
+        foreach (SceneTile TileData in LevelData.Scenetiles)
         {
             if (TileData.Breakable)
             {
@@ -107,16 +73,19 @@ public class LevelManager : MonoBehaviour
                             SceneTile New = TileData.Clone();
                             New.Position = new Vector3(x + 0.5f, y + 0.5f, z + 0.5f);
                             New.Scale = Vector3Int.one;
-                            CreateObject(New);
+                            NewScenetiles.Add(CreateObject(New));
                         }
                     }
                 }
             }
             else
             {
-                CreateObject(TileData);
+                NewScenetiles.Add(CreateObject(TileData));
             }
         }
+
+        LevelData.Scenetiles = NewScenetiles;
+        LevelData.GenerateAtPositionList();
     }
 
 
@@ -127,12 +96,16 @@ public class LevelManager : MonoBehaviour
     {
         Return = C_Return;
         LevelData = LevelCatalogue.GetLevelAtIndex(C_Level);
-        LevelData.GenerateAtPositionList();
-        ExitBeam.ExitAt(Vector3.zero);
-        Canvas.transform.GetChild(0).gameObject.SetActive(false);
-        Canvas.transform.GetChild(1).gameObject.SetActive(true);
-        PlayerObject.GetComponent<Player>().BackToCheckpoint();
+        Canvas.transform.GetChild(0).GetComponent<MenuFade>().Fade(false);
+        Canvas.transform.GetChild(1).GetComponent<MenuFade>().Fade(true);
+        ExitBeam.EnterAt(Vector3.zero, true);
+
+        Mode = C_Return ? GameMode.LevelReturn : GameMode.LevelEndless;
+        FogManager.LerpTo(new Color(0.4f, 0.4f, 0.4f, 1), 1);
         MusicManager.PlaySong(LevelData.SongIndex);
+        BackgroundManager.SetMode(LevelData.BackgroundType);
+
+        List<SceneTile> NewScenetiles = new List<SceneTile>();
 
         foreach (SceneTile TileData in LevelCatalogue.GetLevelAtIndex(C_Level).Scenetiles)
         {
@@ -150,35 +123,38 @@ public class LevelManager : MonoBehaviour
                             SceneTile New = TileData.Clone();
                             New.Position = new Vector3(x + 0.5f, y + 0.5f, z + 0.5f);
                             New.Scale = Vector3Int.one;
-                            CreateObject(New);
+                            NewScenetiles.Add(CreateObject(New));
                         }
                     }
                 }
             }
             else
             {
-                CreateObject(TileData);
+                NewScenetiles.Add(CreateObject(TileData));
             }
         }
 
-        Mode = C_Return ? GameMode.LevelReturn : GameMode.LevelEndless;
-        FogManager.LerpTo(new Color(0.4f, 0.4f, 0.4f, 1), 1);
+        LevelData.Scenetiles = NewScenetiles;
+        LevelData.GenerateAtPositionList();
     }
 
 
-    public void CreateObject(SceneTile C_TileData)
+    public SceneTile CreateObject(SceneTile C_TileData)
     {
         switch (C_TileData.Type)
         {
             case TileType.Wall:
                 //Create tile prefab
                 GameObject NewWall = Instantiate(TilePrefab, transform);
+                C_TileData.Parent = NewWall;
                 NewWall.GetComponent<WallScript>().Bootup(C_TileData);
-                NewWall.GetComponent<WallScript>().TileData.Parent = NewWall;
                 break;
 
             case TileType.Scaffold:
-                //Do nothing
+                //Create tile prefab
+                GameObject NewScaffold = Instantiate(TilePrefab, transform);
+                C_TileData.Parent = NewScaffold;
+                NewScaffold.GetComponent<WallScript>().Bootup(C_TileData);
                 break;
 
             case TileType.Null:
@@ -188,36 +164,36 @@ public class LevelManager : MonoBehaviour
             case TileType.PushPiston:
                 //Create a piston prefab
                 GameObject NewPushPiston = Instantiate(PistonPrefab, transform);
+                C_TileData.Parent = NewPushPiston;
                 NewPushPiston.GetComponent<PistonScript>().Bootup(C_TileData);
-                NewPushPiston.GetComponent<PistonScript>().TileData.Parent = NewPushPiston;
                 break;
 
             case TileType.PivotPiston:
                 //Create a piston prefab
                 GameObject NewPivortPiston = Instantiate(PistonPrefab, transform);
+                C_TileData.Parent = NewPivortPiston;
                 NewPivortPiston.GetComponent<PistonScript>().Bootup(C_TileData);
-                NewPivortPiston.GetComponent<PistonScript>().TileData.Parent = NewPivortPiston;
                 break;
 
             case TileType.Collectable:
                 //Create a collectable prefab
                 GameObject NewCollectable = Instantiate(CollectablePrefab, transform);
+                C_TileData.Parent = NewCollectable;
                 NewCollectable.GetComponent<CollectableScript>().Bootup(C_TileData);
-                NewCollectable.GetComponent<CollectableScript>().TileData.Parent = NewCollectable;
                 break;
 
             case TileType.DangerTile:
                 //Create a timer tile prefab
                 GameObject NewDangerTile = Instantiate(TimerPrefab, transform);
+                C_TileData.Parent = NewDangerTile;
                 NewDangerTile.GetComponent<TimerScript>().Bootup(C_TileData);
-                NewDangerTile.GetComponent<TimerScript>().TileData.Parent = NewDangerTile;
                 break;
 
             case TileType.PushTile:
                 //Create a timer tile prefab
                 GameObject NewPushTile = Instantiate(TimerPrefab, transform);
+                C_TileData.Parent = NewPushTile;
                 NewPushTile.GetComponent<TimerScript>().Bootup(C_TileData);
-                NewPushTile.GetComponent<TimerScript>().TileData.Parent = NewPushTile;
                 break;
 
             case TileType.TextPoint:
@@ -227,8 +203,8 @@ public class LevelManager : MonoBehaviour
             case TileType.IONode:
                 //Create a node prefab
                 GameObject NewIONode = Instantiate(NodePrefab, transform);
+                C_TileData.Parent = NewIONode;
                 NewIONode.GetComponent<IONodeScript>().Bootup(C_TileData);
-                NewIONode.GetComponent<IONodeScript>().TileData.Parent = NewIONode;
                 break;
 
             case TileType.SuperNode:
@@ -243,20 +219,30 @@ public class LevelManager : MonoBehaviour
             case TileType.RenderingFeature:
                 //Create a rendering feature prefab
                 GameObject NewRenderingFeature = Instantiate(RenderingFeaturePrefab, transform);
+                C_TileData.Parent = NewRenderingFeature;
                 NewRenderingFeature.GetComponent<RenderTypeScript>().Bootup(C_TileData);
-                NewRenderingFeature.GetComponent<RenderTypeScript>().TileData.Parent = NewRenderingFeature;
                 break;
         }
+
+        return C_TileData;
     }
 
 
     public void BackToMenu()
     {
         LastPosition = Vector3.zero;
-        Canvas.transform.GetChild(0).gameObject.SetActive(true);
-        Canvas.transform.GetChild(1).gameObject.SetActive(false);
+        ExitBeam.ExitAt(PlayerObject.transform.position, false, false);
+        Canvas.transform.GetChild(0).GetComponent<MenuFade>().Fade(true);
+        Canvas.transform.GetChild(1).GetComponent<MenuFade>().Fade(false);
         Mode = GameMode.Menu;
+        BackgroundManager.SetMode(BackgroundType.Boxy);
         FogManager.LerpTo(new Color(0.32f, 0.4f, 0.4f, 1), 1);
+        MusicManager.PlaySong(0);
+
+        foreach (Transform T in transform)
+        {
+            T.GetComponent<TileLoader>().LoadOut();
+        }
     }
 
 

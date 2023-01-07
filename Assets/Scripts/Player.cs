@@ -105,17 +105,7 @@ public class Player : MonoBehaviour
 
                 case MovementType.Restart:
                     MovementManager.Movements = new List<PlayerMovement>();
-                    ExitBeam.ExitAt(transform.position);
-                    break;
-
-                case MovementType.DeathVoidJump:
-                    transform.position = Movement.StartPosition;
-                    transform.position = Movement.JumpFunction();
-                    break;
-
-                case MovementType.DeathVoidSlide:
-                    transform.position = Movement.StartPosition;
-                    transform.position = Movement.VoidSlideFunction();
+                    BackToCheckpoint();
                     break;
 
                 case MovementType.RotateAround:
@@ -136,6 +126,16 @@ public class Player : MonoBehaviour
     /// </summary>
     private void CheckInputs()
     {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            BackToCheckpoint();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            LevelManager.BackToMenu();
+        }
+
         if (Input.GetKeyDown(KeyCode.W))
         {
             MovementManager.NewActions(Vector3Int.RoundToInt(Board.transform.forward * -SideUp), Vector3Int.RoundToInt(Board.transform.right * -90));
@@ -217,7 +217,7 @@ public class Player : MonoBehaviour
                 switch (Tile.Type)
                 {
                     case TileType.Scaffold:
-                        ExitBeam.ExitAt(transform.position);
+                        BackToCheckpoint();
                         return;
                     case TileType.Collectable:
                         CurrentlyIn.Add(Tile);
@@ -250,7 +250,6 @@ public class Player : MonoBehaviour
                 {
                     case TileType.PushPiston:
                         MovementManager.Movements.Add(new PlayerMovement(MovementType.Slide, Vector3Int.up * Tile.Scale.y));
-
                         Tile.Parent.GetComponent<PistonScript>().PlayerOn();
                         CurrentlyOn.Add(Tile);
                         break;
@@ -258,16 +257,14 @@ public class Player : MonoBehaviour
                     case TileType.PivotPiston:
                         transform.RotateAround(Tile.Position, Vector3.up, 90);
                         Vector3Int Position = Vector3Int.RoundToInt(transform.position);
-                        Position.y = Tile.Scale.y;
+                        Position.y += Tile.Scale.y;
                         transform.RotateAround(Tile.Position, Vector3.up, -90);
                         MovementManager.Movements.Add(new PlayerMovement(Position - Vector3Int.RoundToInt(transform.position), Vector3.up * 90, Tile.Position));
-
                         Tile.Parent.GetComponent<PistonScript>().PlayerOn();
                         CurrentlyOn.Add(Tile);
                         break;
 
                     case TileType.IONode:
-                        Tile.Parent.GetComponent<IONodeScript>().PlayerOn();
                         CurrentlyOn.Add(Tile);
 
                         LevelManager.LoadLevel(((IONode)Tile).LevelTo, ((IONode)Tile).PositionTo);
@@ -275,7 +272,6 @@ public class Player : MonoBehaviour
 
                     case TileType.SuperNode:
 
-                        Tile.Parent.GetComponent<SuperNodeScript>().PlayerOn();
                         CurrentlyOn.Add(Tile);
                         break;
                 }
@@ -300,10 +296,8 @@ public class Player : MonoBehaviour
                     Tile.Parent.GetComponent<PistonScript>().PlayerOff();
                     break;
                 case TileType.IONode:
-                    Tile.Parent.GetComponent<IONodeScript>().PlayerOff();
                     break;
                 case TileType.SuperNode:
-                    Tile.Parent.GetComponent<SuperNodeScript>().PlayerOff();
                     break;
             }
         }
@@ -366,11 +360,13 @@ public class Player : MonoBehaviour
     }
 
 
-    public void BackToCheckpoint()
+    public void BackToCheckpoint(bool C_LongWait = false)
     {
-        ExitBeam.ExitAt(transform.position);
+        ExitBeam.ExitAt(transform.position, C_LongWait);
         SideUp = 1;
         transform.eulerAngles = Vector3.zero;
+
+        ManagePlayerOffOut();
         CurrentlyOn = new List<SceneTile>();
         CurrentlyIn = new List<SceneTile>();
     }
@@ -378,195 +374,177 @@ public class Player : MonoBehaviour
 
     private class PlayerMovementManager
     {
-        private Vector3Int PlayerPosition => Vector3Int.RoundToInt(GameObject.FindGameObjectWithTag("Player").transform.position);
+        private Vector3Int PlayerPosition => Vector3Int.RoundToInt(Player.transform.position);
         private Player Player => GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
 
-
         public List<PlayerMovement> Movements = new List<PlayerMovement>();
+
 
         public void NewActions(Vector3Int C_PositionChange, Vector3Int? C_RotationChange = null)
         {
 
             Movements = new List<PlayerMovement>();
-            HelperDirection MoveDirection = new HelperDirection(C_PositionChange);
+
             Vector3Int CurrentPosition = PlayerPosition;
-            Vector3Int EndPoint = PlayerPosition + C_PositionChange;
+            Vector3Int EndPosition = PlayerPosition + C_PositionChange;
+            Vector3Int MoveDirection = Vector3Int.RoundToInt(((Vector3)ToMove()).normalized);
 
             Vector3Int ToMove()
             {
-                return new Vector3Int(EndPoint.x - CurrentPosition.x, 0, EndPoint.z - CurrentPosition.z);
+                return new Vector3Int(EndPosition.x - CurrentPosition.x, 0, EndPosition.z - CurrentPosition.z);
             }
 
             bool Jump = C_RotationChange != null;
-            Vector3Int RotationChange = Jump ? C_RotationChange.Value : Vector3Int.zero;
 
-        NewActionsWhile:
+        MovementBeginning:
             if (ToMove().magnitude == 0)
             {
+                //No movement left
                 goto Falling;
             }
             else
             {
                 if (Jump)
                 {
-                    int DistTillWall = int.MaxValue;
-                    int DistTillCeil = int.MaxValue;
-                    int DistTillHole = int.MaxValue;
-
+                    int NearestPit = int.MaxValue;
                     for (int I = 1; I <= ToMove().magnitude; I++)
                     {
-                        if (Player.CheckCollision(CurrentPosition + I * MoveDirection.IDirection))
+                        if (!Player.CheckCollision(CurrentPosition + I * MoveDirection + Vector3Int.down))
                         {
-                            DistTillWall = I;
+                            NearestPit = I;
                             break;
                         }
                     }
 
+                    int NearestWall = int.MaxValue;
                     for (int I = 1; I <= ToMove().magnitude; I++)
                     {
-                        if (Player.CheckCollision(CurrentPosition + I * MoveDirection.IDirection + Vector3Int.up))
+                        if (Player.CheckCollision(CurrentPosition + I * MoveDirection))
                         {
-                            DistTillCeil = I;
+                            NearestWall = I;
                             break;
                         }
                     }
 
+                    int NearestCeil = int.MaxValue;
                     for (int I = 1; I <= ToMove().magnitude; I++)
                     {
-                        if (Player.CheckCollision(CurrentPosition + I * MoveDirection.IDirection + Vector3Int.down))
+                        if (Player.CheckCollision(CurrentPosition + I * MoveDirection + Vector3Int.up))
                         {
-                            DistTillHole = I;
+                            NearestCeil = I;
                             break;
                         }
                     }
 
-                    if (DistTillWall == int.MaxValue)
+                    //Check for long jump
+                    if (NearestPit == int.MaxValue && NearestWall == int.MaxValue && NearestCeil == int.MaxValue)
                     {
-                        //No wall
-                        if (DistTillCeil == int.MaxValue)
-                        {
-                            //No ceil
-                            if (DistTillHole > 1 && DistTillHole < int.MaxValue)
-                            {
-                                //Slide forward
-                                Movements.Add(new PlayerMovement(MovementType.Slide, MoveDirection.IDirection));
-                                CurrentPosition += MoveDirection.IDirection;
-                                goto NewActionsWhile;
-                            }
-                            else
-                            {
-                                //Void jump
-                                for (int I = 1; I < 10; I++)
-                                {
-                                    if (Player.CheckCollision(CurrentPosition + ToMove() + Vector3Int.down * I))
-                                    {
-                                        Movements.Add(new PlayerMovement(MovementType.VoidJump, Vector3Int.down * (I - 1) + ToMove(), RotationChange));
-                                        return;
-                                    }
-                                }
-                                Movements.Add(new PlayerMovement(MovementType.DeathVoidJump, ToMove(), RotationChange));
-                                Movements.Add(new PlayerMovement(MovementType.Restart));
-                                return;
-                            }
-                        }
-                        else
-                        {
-                            //Ceil
-                            Movements.Add(new PlayerMovement(MovementType.VoidJump, MoveDirection.IDirection * (DistTillCeil - 1) + Vector3Int.up, RotationChange));
-                            CurrentPosition += MoveDirection.IDirection * (DistTillCeil - 1) + Vector3Int.up;
-                            goto Falling;
-                        }
+                        Movements.Add(new PlayerMovement(MovementType.VoidJump, ToMove(), C_RotationChange.Value));
+                        CurrentPosition += ToMove();
+                        goto Falling;
                     }
-                    else
+
+                    //Check for jump into a ceiling
+                    if ((NearestCeil != int.MaxValue) && (NearestWall >= NearestCeil) && ((NearestPit == 1) || (NearestPit > NearestCeil)))
                     {
+                        Movements.Add(new PlayerMovement(MovementType.VoidJump, MoveDirection * (NearestCeil - 1) + Vector3Int.up, C_RotationChange.Value));
+                        CurrentPosition += MoveDirection * (NearestCeil - 1) + Vector3Int.up;
+                        goto Falling;
+                    }
+
+                    //Check for jump onto wall
+                    if (((NearestPit == 1) || (NearestPit > NearestWall)) && (NearestCeil > NearestWall) && (NearestWall != int.MaxValue))
+                    {
+                        Movements.Add(new PlayerMovement(MovementType.VoidJump, MoveDirection * NearestWall + Vector3Int.up, C_RotationChange.Value));
+                        CurrentPosition += MoveDirection * NearestWall + Vector3Int.up;
                         Jump = false;
-                        //Wall in the way
-                        if (DistTillCeil <= DistTillWall)
-                        {
-                            //Jump into the ceiling
-                            Movements.Add(new PlayerMovement(MovementType.VoidJump, MoveDirection.IDirection * (DistTillCeil - 1) + Vector3Int.up, RotationChange));
-                            CurrentPosition += MoveDirection.IDirection * (DistTillCeil - 1) + Vector3Int.up;
-                            goto Falling;
-                        }
-                        else
-                        {
-                            //Jump to 1 tile before the wall and slide forward 1
-                            Movements.Add(new PlayerMovement(MovementType.VoidJump, MoveDirection.IDirection * (DistTillWall - 1) + Vector3Int.up, RotationChange));
-                            Movements.Add(new PlayerMovement(MovementType.Slide, MoveDirection.IDirection));
-                            CurrentPosition += MoveDirection.IDirection * DistTillWall + Vector3Int.up;
-                            goto NewActionsWhile;
-                        }
+                        goto MovementBeginning;
                     }
+
+                    //Check for move forward
+                    if (NearestPit != 1 && NearestWall != 1)
+                    {
+                        Movements.Add(new PlayerMovement(MovementType.Slide, MoveDirection));
+                        CurrentPosition += MoveDirection;
+                        goto MovementBeginning;
+                    }
+
+                    //Check for long jump
+                    if (NearestPit == 1 && NearestWall == int.MaxValue && NearestCeil == int.MaxValue)
+                    {
+                        Movements.Add(new PlayerMovement(MovementType.VoidJump, ToMove(), C_RotationChange.Value));
+                        CurrentPosition += ToMove();
+                        goto Falling;
+                    }
+
+                    //Void jump
+                    Movements.Add(new PlayerMovement(MovementType.VoidJump, Vector3Int.down * 5 + ToMove(), C_RotationChange.Value));
+                    Movements.Add(new PlayerMovement(MovementType.Restart));
+                    return;
                 }
                 else
                 {
-                    if (Player.CheckCollision(CurrentPosition + MoveDirection.IDirection))
+                    //Check for wall
+                    if (Player.CheckCollision(CurrentPosition + MoveDirection))
                     {
-                        //If wall
+                        //Wall in the way
                         goto Falling;
                     }
-                    else
+
+                    //Check for pit
+                    if (Player.CheckCollision(CurrentPosition + MoveDirection + Vector3Int.down))
                     {
-                        //If no wall
-                        if (Player.CheckCollision(CurrentPosition + MoveDirection.IDirection + Vector3Int.down))
+                        //No pit
+                        Movements.Add(new PlayerMovement(MovementType.Dash, MoveDirection));
+                        CurrentPosition += MoveDirection;
+                        goto MovementBeginning;
+                    }
+
+                    //Pit in the way, check for tile or wall to slide to
+                    for (int I = 1; I <= ToMove().magnitude; I++)
+                    {
+                        //Hit a wall
+                        if (Player.CheckCollision(CurrentPosition + I * MoveDirection))
                         {
-                            //If no hole
-                            Movements.Add(new PlayerMovement(MovementType.Slide, MoveDirection.IDirection));
-                            CurrentPosition += MoveDirection.IDirection;
-                            goto NewActionsWhile;
+                            Movements.Add(new PlayerMovement(MovementType.Dash, MoveDirection * (I - 1)));
+                            CurrentPosition += MoveDirection * (I - 1);
+                            goto Falling;
                         }
-                        else
+
+                        //Found a spot to slide to
+                        if (Player.CheckCollision(CurrentPosition + I * MoveDirection + Vector3Int.down))
                         {
-                            //If hole
-                            for (int I = 1; I <= ToMove().magnitude; I++) //Where I is distance forward
+                            Movements.Add(new PlayerMovement(MovementType.Dash, MoveDirection * I));
+                            CurrentPosition += MoveDirection * I;
+                            goto MovementBeginning;
+                        }
+                    }
+
+                    //Void slide (or death void slide)
+                    for (int IDown = 1; IDown <= 10; IDown++)
+                    {
+                        if (Player.CheckCollision(CurrentPosition + ToMove() + Vector3Int.down * IDown))
+                        {
+                            if (IDown != 1)
                             {
-                                if (Player.CheckCollision(MoveDirection.IDirection * I + CurrentPosition))
-                                {
-                                    //Wall in the way, fall
-                                    if (I != 1)
-                                    {
-                                        Movements.Add(new PlayerMovement(MovementType.Dash, MoveDirection.IDirection * (I - 1)));
-                                        CurrentPosition += MoveDirection.IDirection * (I - 1);
-                                    }
-                                    goto Falling;
-                                }
-                                else
-                                {
-                                    //No wall in the way
-                                    if (Player.CheckCollision(CurrentPosition + MoveDirection.IDirection * I + Vector3Int.down))
-                                    {
-                                        //No hole
-                                        Movements.Add(new PlayerMovement(MovementType.Slide, MoveDirection.IDirection * I));
-                                        CurrentPosition += MoveDirection.IDirection * I;
-                                        goto NewActionsWhile;
-                                    }
-                                    else
-                                    {
-                                        //Hole
-                                        //Let the for loop iterate
-                                    }
-                                }
+                                Movements.Add(new PlayerMovement(MovementType.Slide, MoveDirection));
+                                Movements.Add(new PlayerMovement(MovementType.VoidSlide, MoveDirection * Mathf.RoundToInt(ToMove().magnitude - 1) + Vector3Int.down * (IDown - 1)));
                             }
-                            Movements.Add(new PlayerMovement(MovementType.Slide, MoveDirection.IDirection));
-                            for (int I = 2; I <= 5; I++)
-                            {
-                                if (Player.CheckCollision((Vector3Int.down * I) + CurrentPosition + ((int)ToMove().magnitude * MoveDirection.IDirection)))
-                                {
-                                    Movements.Add(new PlayerMovement(MovementType.VoidSlide, (Vector3Int.down * (I - 1)) + (((int)ToMove().magnitude - 1) * MoveDirection.IDirection)));
-                                    return;
-                                }
-                            }
-                            Movements.Add(new PlayerMovement(MovementType.DeathVoidSlide,((int)ToMove().magnitude - 1) * MoveDirection.IDirection));
-                            Movements.Add(new PlayerMovement(MovementType.Restart));
                             return;
                         }
                     }
+
+                    Movements.Add(new PlayerMovement(MovementType.Slide, MoveDirection));
+                    Movements.Add(new PlayerMovement(MovementType.VoidSlide, Mathf.RoundToInt(((Vector3)ToMove()).magnitude - 1) * MoveDirection + Vector3Int.down * 5));
+                    Movements.Add(new PlayerMovement(MovementType.Restart));
+                    return;
                 }
             }
+
         Falling:
             for (int I = 1; I <= 10; I++)
             {
-                if (Player.CheckCollision((Vector3Int.down * I) + CurrentPosition))
+                if (Player.CheckCollision(CurrentPosition + Vector3Int.down * I))
                 {
                     if (I != 1)
                     {
@@ -575,9 +553,8 @@ public class Player : MonoBehaviour
                     return;
                 }
             }
-            Movements.Add(new PlayerMovement(MovementType.Slide, Vector3Int.down * 10));
+            Movements.Add(new PlayerMovement(MovementType.Slide, Vector3Int.down * 5));
             Movements.Add(new PlayerMovement(MovementType.Restart));
-            return;
         }
     }
 
@@ -631,23 +608,6 @@ public class Player : MonoBehaviour
             StartRotation = C_StartRotation;
             StartTime = Time.fixedUnscaledTime;
             Started = true;
-
-            if (Type == MovementType.DeathVoidJump || Type == MovementType.DeathVoidSlide)
-            {
-                if (SideDirection != Vector3Int.zero)
-                {
-                    PositionChange.y = -(int)PositionChange.magnitude;
-                }
-                else
-                {
-                    PositionChange.y = -4;
-                    TimeScale = 5f / 4;
-                }
-            }
-            else if (Type == MovementType.VoidJump || Type == MovementType.VoidSlide)
-            {
-
-            }
         }
 
         public Vector3 JumpFunction()
@@ -670,9 +630,7 @@ public class Player : MonoBehaviour
         Slide,
         Dash,
         VoidJump,
-        DeathVoidJump,
         VoidSlide,
-        DeathVoidSlide,
         Restart,
         RotateAround,
     }

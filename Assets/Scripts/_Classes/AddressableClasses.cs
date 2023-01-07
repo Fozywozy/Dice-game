@@ -7,12 +7,13 @@ public static class AddressManager
 {
     public static AddressableListReference<Mesh> MeshAddressables = new AddressableListReference<Mesh>();
     public static AddressableListReference<Material> MaterialAddressables = new AddressableListReference<Material>();
-
 }
 
 public class AddressableListReference<T> where T : class
 {
-    public List<GetAddressable<T>> AddressableAssets = new List<GetAddressable<T>>();
+    public Dictionary<AddressableReference, GetAddressable<T>> AddressableAssets = new Dictionary<AddressableReference, GetAddressable<T>>();
+
+    //public List<GetAddressable<T>> AddressableAssets = new List<GetAddressable<T>>();
 
     /// <summary>
     /// Removes one request from the asset requested
@@ -26,8 +27,7 @@ public class AddressableListReference<T> where T : class
             Address.RequestCount--;
             if (Address.RequestCount <= 0)
             {
-                Debug.Log("Mesh no longer needed");
-                _ = AddressableAssets.Remove(Address);
+                _ = AddressableAssets.Remove(C_Path);
                 return;
                 //Nothing needing this anymore
             }
@@ -54,7 +54,7 @@ public class AddressableListReference<T> where T : class
             }
         }
 
-        AddressableAssets.Add(new GetAddressable<T>(C_Path));
+        AddressableAssets.Add(C_Path, new GetAddressable<T>(C_Path));
         return null;
     }
 
@@ -71,7 +71,7 @@ public class AddressableListReference<T> where T : class
         else
         {
             //GetAddressable Does not exist
-            AddressableAssets.Add(new GetAddressable<T>(C_Path));
+            AddressableAssets.Add(C_Path, new GetAddressable<T>(C_Path));
         }
     }
 
@@ -81,14 +81,14 @@ public class AddressableListReference<T> where T : class
     /// </summary>
     private GetAddressable<T> GetAssetAtPath(AddressableReference C_Path)
     {
-        foreach (GetAddressable<T> Address in AddressableAssets)
+        if (AddressableAssets.TryGetValue(C_Path, out GetAddressable<T> Out))
         {
-            if (C_Path == Address.Path)
-            {
-                return Address;
-            }
+            return Out;
         }
-        return null;
+        else
+        {
+            return null;
+        }
     }
 }
 
@@ -115,8 +115,8 @@ public class GetAddressable<T> where T : class
 
 public class AddressableReference
 {
-    public string AddressableTag;  //The tag the addressable is, E.g. Weapon, Walls
-    public string AddressableName; //The addressables name
+    public string AddressableTag = null;  //The tag the addressable is, E.g. Weapon, Walls
+    public string AddressableName = null; //The addressables name
 
     public string String => (AddressableTag ?? "") + ":" + (AddressableName ?? "");
 

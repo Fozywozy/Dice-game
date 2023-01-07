@@ -11,16 +11,18 @@ public class PistonScript : MonoBehaviour
     public void Bootup(SceneTile C_TileData)
     {
         TileData = (Piston)C_TileData;
+
         transform.position = C_TileData.Position;
         transform.localScale = C_TileData.Scale;
         GetComponent<TileLoader>().Bootup();
+
         if (TileData.MeshType != TileMesh.Blank)
         {
             transform.GetChild(0).GetComponent<TileRenderer>().BootUp(LevelManager.LevelData.MeshAssignment[C_TileData.MeshType]);
 
             MeshRenderingAsset RenderingAsset = new MeshRenderingAsset
             {
-                MaterialReferences = LevelManager.LevelData.MeshAssignment[C_TileData.MeshType].MaterialReferences,
+                MaterialReferences = new List<AddressableReference> { LevelManager.LevelData.MeshAssignment[C_TileData.MeshType].MaterialReferences[0] },
                 MeshReference = new AddressableReference("System", "Cube")
             };
             transform.GetChild(1).GetComponent<TileRenderer>().BootUp(RenderingAsset);
@@ -42,13 +44,13 @@ public class PistonScript : MonoBehaviour
         new AnimationBrick(1, 0,    0, 0, 0,    0, 0, 0),
     });
 
-    private AnimationBrickList PivortOut => new AnimationBrickList(new List<AnimationBrick>
+    private AnimationBrickList PivotOut => new AnimationBrickList(new List<AnimationBrick>
     {
         new AnimationBrick(0, 0,    0, 0, 0,    0, 0, 0),
         new AnimationBrick(1, 0,    0, 1, 0,    0, 90, 0),
     });
 
-    private AnimationBrickList PivortIn => new AnimationBrickList(new List<AnimationBrick>
+    private AnimationBrickList PivotIn => new AnimationBrickList(new List<AnimationBrick>
     {
         new AnimationBrick(0, 0,    0, 1, 0,    0, 90, 0),
         new AnimationBrick(1, 0,    0, 0, 0,    0, 0, 0),
@@ -74,8 +76,8 @@ public class PistonScript : MonoBehaviour
         {
             (true, TileType.PushPiston) => PushOut,
             (false, TileType.PushPiston) => PushIn,
-            (true, TileType.PivotPiston) => PivortOut,
-            (false, TileType.PivotPiston) => PivortIn,
+            (true, TileType.PivotPiston) => PivotOut,
+            (false, TileType.PivotPiston) => PivotIn,
             _ => null,
         };
 
@@ -93,17 +95,5 @@ public class PistonScript : MonoBehaviour
     {
         Active = false;
         enabled = true;
-    }
-
-    //Useless
-    public void PlayerIn()
-    {
-
-    }
-
-    //Useless
-    public void PlayerOut()
-    {
-
     }
 }

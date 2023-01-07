@@ -59,8 +59,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Transparent: {fileID: 2100000, guid: e92d0425a2ef64818822cdbf2737dbe3, type: 2}
-  LoadingIn: 0
   LoadingOut: 0
+  StartedLoadIn: 0
+  StartedLoadOut: 0
 --- !u!1 &6852715149426702151
 GameObject:
   m_ObjectHideFlags: 0
@@ -115,7 +116,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6852715149426702151}
   m_Enabled: 0
-  m_CastShadows: 1
+  m_CastShadows: 2
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0

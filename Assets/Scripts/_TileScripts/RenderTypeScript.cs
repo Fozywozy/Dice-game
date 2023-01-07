@@ -28,7 +28,7 @@ public class RenderTypeScript : MonoBehaviour
         transform.position = C_TileData.Position;
         transform.localScale = C_TileData.Scale;
         GetComponent<TileLoader>().Bootup();
-        Debug.Log(TileData.MeshType);
+
         if (TileData.MeshType != TileMesh.Blank)
         {
             transform.GetChild(0).GetComponent<TileRenderer>().BootUp(LevelManager.LevelData.MeshAssignment[C_TileData.MeshType]);
@@ -61,20 +61,5 @@ public class RenderTypeScript : MonoBehaviour
             transform.localScale = new Vector3(1, 0.5f, 1);
             transform.position -= new Vector3(0, 0.25f, 0);
         }
-    }
-
-    public void PlayerOff()
-    {
-
-    }
-
-    public void PlayerIn()
-    {
-
-    }
-
-    public void PlayerOut()
-    {
-
     }
 }

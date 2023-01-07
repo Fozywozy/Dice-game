@@ -11,6 +11,7 @@ public class CollectableScript : MonoBehaviour
         TileData = (Collectable)C_TileData;
         transform.position = C_TileData.Position;
         GetComponent<TileLoader>().Bootup();
+
         if (TileData.MeshType != TileMesh.Blank)
         {
             transform.GetChild(0).GetComponent<TileRenderer>().BootUp(LevelManager.LevelData.MeshAssignment[C_TileData.MeshType]);

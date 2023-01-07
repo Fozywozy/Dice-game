@@ -26,6 +26,7 @@ public class TimerScript : MonoBehaviour
 
     public SceneTile TileData;
 
+
     public AnimationBrickList OpacityShake = new AnimationBrickList( new List<AnimationBrick>
     {
         new AnimationBrick(0, 0.8f,     0, -0.45f, 0,           0, 0, 0),
@@ -37,6 +38,7 @@ public class TimerScript : MonoBehaviour
     },
         1f
     );
+
 
     public void Bootup(SceneTile C_TileData)
     {
@@ -68,6 +70,7 @@ public class TimerScript : MonoBehaviour
         GetComponent<TileLoader>().Bootup();
         Timer = new TimerList(Timers);
     }
+
 
     public void Update()
     {
@@ -102,17 +105,20 @@ public class TimerScript : MonoBehaviour
         }
     }
 
+
     public void PlayerIn()
     {
         Active = true;
         transform.position += Vector3.up;
     }
 
+
     public void PlayerOut()
     {
         Active = false;
         transform.position -= Vector3.up;
     }
+
 
     public void PlayAnimation()
     {

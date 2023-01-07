@@ -1,12 +1,10 @@
 using TMPro;
 using UnityEngine;
 using UnityEditor;
-using UnityEngine.UI;
 
 [CustomEditor(typeof(ButtonManager))]
-public class ButtonEditor : Editor
+public class ButtonManagerEditor : Editor
 {
-
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
@@ -43,11 +41,16 @@ public class ButtonEditor : Editor
                 (Transform.GetChild(0).GetChild(ChildIndex).GetChild(2) as RectTransform).localScale = new Vector3(Orientation, 1, 1);
             }
 
-            (Transform.GetChild(0).GetChild(2) as RectTransform).sizeDelta = new Vector2((72 - (Script.Orientation ? 30 : 10)) * Script.Scale + Script.LengthSize, 0);
+            //Text
+            (Transform.GetChild(0).GetChild(2) as RectTransform).sizeDelta = new Vector2(52 * Script.Scale + Script.LengthSize, 0);
+            Transform.GetChild(0).GetChild(2).GetComponent<TextMeshProUGUI>().alignment = Script.Orientation ? TextAlignmentOptions.MidlineRight : TextAlignmentOptions.MidlineLeft;
             Transform.GetChild(0).GetChild(2).GetComponent<TextMeshProUGUI>().fontSize = 24 * Script.Scale;
             Transform.GetChild(0).GetChild(2).GetComponent<TextMeshProUGUI>().text = Script.Text;
 
+            //Mask size
             (Transform.GetChild(0) as RectTransform).sizeDelta = new Vector2(72 * Script.Scale + Script.LengthSize, 46 * Script.Scale);
+
+            //Button size
             (Transform as RectTransform).sizeDelta = new Vector2(72 * Script.Scale + Script.LengthSize, 46 * Script.Scale);
         }
     }

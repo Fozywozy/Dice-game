@@ -53,22 +53,22 @@ public class LevelSave
         Dictionary<TileMesh, MeshRenderingAsset> DefaultDictionary = new Dictionary<TileMesh, MeshRenderingAsset>
         {
             //Default
-            [TileMesh.Wall1] = new MeshRenderingAsset(new List<string> { "System", "Cube", "Opaque", "Shiny gray" }),
-            [TileMesh.Wall2] = new MeshRenderingAsset(new List<string> { "System", "Cube", "Opaque", "Shiny gray" }),
-            [TileMesh.Wall3] = new MeshRenderingAsset(new List<string> { "System", "Cube", "Opaque", "Shiny gray" }),
-            [TileMesh.Wall4] = new MeshRenderingAsset(new List<string> { "System", "Cube", "Opaque", "Shiny gray" }),
-            [TileMesh.Wall5] = new MeshRenderingAsset(new List<string> { "System", "Cube", "Opaque", "Shiny gray" }),
-            [TileMesh.Wall6] = new MeshRenderingAsset(new List<string> { "System", "Cube", "Opaque", "Shiny gray" }),
-            [TileMesh.Wall7] = new MeshRenderingAsset(new List<string> { "System", "Cube", "Opaque", "Shiny gray" }),
-            [TileMesh.Wall8] = new MeshRenderingAsset(new List<string> { "System", "Cube", "Opaque", "Shiny gray" }),
-            [TileMesh.Wall9] = new MeshRenderingAsset(new List<string> { "System", "Cube", "Opaque", "Shiny gray" }),
-            [TileMesh.Wall10] = new MeshRenderingAsset(new List<string> { "System", "Cube", "Opaque", "Shiny gray" }),
-            [TileMesh.Wall11] = new MeshRenderingAsset(new List<string> { "System", "Cube", "Opaque", "Shiny gray" }),
-            [TileMesh.Wall12] = new MeshRenderingAsset(new List<string> { "System", "Cube", "Opaque", "Shiny gray" }),
-            [TileMesh.Wall13] = new MeshRenderingAsset(new List<string> { "System", "Cube", "Opaque", "Shiny gray" }),
-            [TileMesh.Wall14] = new MeshRenderingAsset(new List<string> { "System", "Cube", "Opaque", "Shiny gray" }),
-            [TileMesh.Wall15] = new MeshRenderingAsset(new List<string> { "System", "Cube", "Opaque", "Shiny gray" }),
-            [TileMesh.Wall16] = new MeshRenderingAsset(new List<string> { "System", "Cube", "Opaque", "Shiny gray" }),
+            [TileMesh.Wall1] = new MeshRenderingAsset(new List<string> { "System", "Cube", "Opaque", "Dull gray" }),
+            [TileMesh.Wall2] = new MeshRenderingAsset(new List<string> { "Tile", "Bridge", "Opaque", "Dull gray", "Opaque", "Dull green" }),
+            [TileMesh.Wall3] = new MeshRenderingAsset(new List<string> { "Tile", "Pad", "Opaque", "Dull gray", "Opaque", "Dull green" }),
+            [TileMesh.Wall4] = new MeshRenderingAsset(new List<string> { "Tile", "Pillar", "Opaque", "Dull gray" }),
+            [TileMesh.Wall5] = new MeshRenderingAsset(new List<string> { "Tile", "Scaffold", "Transparent", "Dull yellow" }),
+            [TileMesh.Wall6] = new MeshRenderingAsset(new List<string> { "System", "Cube", "Opaque", "Dull gray" }),
+            [TileMesh.Wall7] = new MeshRenderingAsset(new List<string> { "System", "Cube", "Opaque", "Dull gray" }),
+            [TileMesh.Wall8] = new MeshRenderingAsset(new List<string> { "System", "Cube", "Opaque", "Dull gray" }),
+            [TileMesh.Wall9] = new MeshRenderingAsset(new List<string> { "System", "Cube", "Opaque", "Dull gray" }),
+            [TileMesh.Wall10] = new MeshRenderingAsset(new List<string> { "System", "Cube", "Opaque", "Dull gray" }),
+            [TileMesh.Wall11] = new MeshRenderingAsset(new List<string> { "System", "Cube", "Opaque", "Dull gray" }),
+            [TileMesh.Wall12] = new MeshRenderingAsset(new List<string> { "System", "Cube", "Opaque", "Dull gray" }),
+            [TileMesh.Wall13] = new MeshRenderingAsset(new List<string> { "System", "Cube", "Opaque", "Dull gray" }),
+            [TileMesh.Wall14] = new MeshRenderingAsset(new List<string> { "System", "Cube", "Opaque", "Dull gray" }),
+            [TileMesh.Wall15] = new MeshRenderingAsset(new List<string> { "System", "Cube", "Opaque", "Dull gray" }),
+            [TileMesh.Wall16] = new MeshRenderingAsset(new List<string> { "System", "LightningBolt", "System", "Lightning", "System", "Lightning" }),
 
             [TileMesh.Collectable1] = new MeshRenderingAsset(new List<string> { "Collectable", "Coin", "Opaque", "Shiny yellow" }),
             [TileMesh.Collectable2] = new MeshRenderingAsset(new List<string> { "Collectable", "Coin", "Opaque", "Shiny yellow" }),
@@ -79,13 +79,13 @@ public class LevelSave
             [TileMesh.Collectable7] = new MeshRenderingAsset(new List<string> { "Collectable", "Coin", "Opaque", "Shiny yellow" }),
             [TileMesh.Collectable8] = new MeshRenderingAsset(new List<string> { "Collectable", "Coin", "Opaque", "Shiny yellow" }),
 
-            [TileMesh.IONode1] = new MeshRenderingAsset(new List<string> { "IONode", "Blank", "Opaque", "Shiny gray", "Opaque", "Shiny green" }),
-            [TileMesh.IONode2] = new MeshRenderingAsset(new List<string> { "IONode", "Blank", "Opaque", "Shiny gray", "Opaque", "Shiny green" }),
-            [TileMesh.IONode3] = new MeshRenderingAsset(new List<string> { "IONode", "Blank", "Opaque", "Shiny gray", "Opaque", "Shiny green" }),
-            [TileMesh.IONode4] = new MeshRenderingAsset(new List<string> { "IONode", "Blank", "Opaque", "Shiny gray", "Opaque", "Shiny green" }),
+            [TileMesh.IONode1] = new MeshRenderingAsset(new List<string> { "IONode", "Blank", "Opaque", "Dull gray", "Opaque", "Dull green" }),
+            [TileMesh.IONode2] = new MeshRenderingAsset(new List<string> { "IONode", "Blank", "Opaque", "Dull gray", "Opaque", "Dull green" }),
+            [TileMesh.IONode3] = new MeshRenderingAsset(new List<string> { "IONode", "Blank", "Opaque", "Dull gray", "Opaque", "Dull green" }),
+            [TileMesh.IONode4] = new MeshRenderingAsset(new List<string> { "IONode", "Blank", "Opaque", "Dull gray", "Opaque", "Dull green" }),
 
-            [TileMesh.Piston1] = new MeshRenderingAsset(new List<string> { "System", "Cube", "Opaque", "Dull gray" }),
-            [TileMesh.Piston2] = new MeshRenderingAsset(new List<string> { "System", "Cube", "Opaque", "Dull gray" }),
+            [TileMesh.Piston1] = new MeshRenderingAsset(new List<string> { "Tile", "Push Piston", "Opaque", "Dull gray", "Opaque", "Dull green" }),
+            [TileMesh.Piston2] = new MeshRenderingAsset(new List<string> { "Tile", "Pivot Piston", "Opaque", "Dull gray", "Opaque", "Dull green" }),
             [TileMesh.Piston3] = new MeshRenderingAsset(new List<string> { "System", "Cube", "Opaque", "Dull gray" }),
             [TileMesh.Piston4] = new MeshRenderingAsset(new List<string> { "System", "Cube", "Opaque", "Dull gray" }),
         };
@@ -153,7 +153,7 @@ public class SceneTile
             //Nodes
             TileType.IONode => true,
             TileType.SuperNode => true,
-            TileType.Checkpoint => true,
+            TileType.Checkpoint => false,
 
             _ => false,
         };
@@ -486,7 +486,6 @@ public enum RenderingType
 public enum CollectableType
 {
     CardStatue,
-
 }
 
 
@@ -499,56 +498,596 @@ public enum BackgroundType
 
 public static class LevelCatalogue
 {
-    //Initializing level
-    public static LevelSave LevelZero = new LevelSave(
-        BackgroundType.Boxy,
-        1,
-        new List<SceneTile>
-        {
-            new Wall(TileType.Wall, TileMesh.Wall1, 0, -1, 0),
-            new IONode(1, 1, 0, 0, TileMesh.IONode1, 0, -1, 1),
-        });
-
-    //Start level
-    public static LevelSave LevelOne = new LevelSave(
-        BackgroundType.Boxy,
-        1,
-        new List<SceneTile>
-        {
-            new Wall(TileType.Wall, TileMesh.Wall1, 0, -1, 0, 9, 1, 9),
-            new Wall(TileType.Wall, TileMesh.Wall1, 0, 0, -5, 5, 1, 5),
-            new IONode(2, 1, 0, 0, TileMesh.IONode1, 0, -1, 5),
-            new TextPoint("To slide, use the arrow keys, the board around the dice points up, left and right, with each corresponding to the direction the key will move the dice in", TextImage.Dice, false, 0, 0, 0),
-            new Piston(TileType.PushPiston, TileMesh.Piston1, 5, -1, 0),
-            new Piston(TileType.PivotPiston, TileMesh.Piston1, -6, -1, 0, 3, 1, 3),
-        });
-
-    //Level one
-    public static LevelSave LevelTwo = new LevelSave(
-        BackgroundType.Boxy,
-        1,
-        new List<SceneTile>
-        {
-            new Wall(TileType.Wall, TileMesh.Wall1, 0, -1, 0, 5, 1, 5),
-            new Wall(TileType.Wall, TileMesh.Wall1, 0, 0, 4, 3, 1, 3),
-            new IONode(2, 1, 0, 0, TileMesh.IONode1, 0, -1, -3),
-            new DangerTile(new List<float> { 0.5f, 2 }, 1, 0, 1),
-            new RenderType(RenderingType.LightningBolt, TileMesh.Wall16, 1, 0, 1),
-            new PushTile(new List<float> { 1f, 1f }, new List<Vector3Int> { Vector3Int.right, Vector3Int.left }, -1, 0, 1),
-        },
-        new Dictionary<TileMesh, MeshRenderingAsset>
-        {
-            [TileMesh.Wall16] = new MeshRenderingAsset(new List<string> { "System", "LightningBolt", "System", "Lightning", "System", "Lightning" }),
-
-        });
-
     public static LevelSave GetLevelAtIndex(int C_Index)
     {
         return C_Index switch
         {
-            0 => LevelZero,
-            1 => LevelOne,
-            2 => LevelTwo,
+            //Tutorial level
+            0 => new LevelSave(
+                BackgroundType.Boxy,
+                1,
+                new List<SceneTile>
+                {
+                    new Wall(TileType.Wall, TileMesh.Wall2, -1, -1, 0, 3, 1, 1),
+
+                    new Wall(TileType.Wall, TileMesh.Wall3, -3, 0, 0),
+
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -3, 0, -1),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -3, 0, -2),
+
+                    new Wall(TileType.Wall, TileMesh.Wall3, -3, 0, -3),
+
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -4, 0, -3),
+
+                    new IONode(1, 0, 0, 0, TileMesh.IONode1, -5, 0, -3),
+                }),
+
+            1 => new LevelSave(
+                BackgroundType.Boxy,
+                1,
+                new List<SceneTile>
+                {
+                    new Wall(TileType.Wall, TileMesh.Wall2, -1, -1, 0, 3, 1, 1),
+
+                    new Wall(TileType.Wall, TileMesh.Wall3, 0, 0, -1),
+
+                    new Wall(TileType.Wall, TileMesh.Wall3, -2, 0, -1),
+
+                    new Wall(TileType.Wall, TileMesh.Wall3, -4, 0, -1),
+
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -4, 0, 0),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -4, 0, 1),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -4, 0, 2),
+
+                    new Wall(TileType.Wall, TileMesh.Wall2, -4, 0, 3),
+                    new IONode(2, 0, 0, 0, TileMesh.IONode1, -5, 0, 3),
+                }),
+
+            2 => new LevelSave(
+                BackgroundType.Boxy,
+                1,
+                new List<SceneTile>
+                {
+                    new Wall(TileType.Wall, TileMesh.Wall2, 0, -1, 0, 3, 1, 1),
+                    new Wall(TileType.Wall, TileMesh.Wall3, -1, 0, -1),
+                    new Wall(TileType.Wall, TileMesh.Wall3, -2, 0, 0),
+
+                    new Wall(TileType.Wall, TileMesh.Wall3, -4, 0, -1),
+
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -3, 0, -1),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -2, 0, -1),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -2, 0, -2),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -2, 0, -3),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -2, 0, -4),
+
+                    new Wall(TileType.Wall, TileMesh.Wall3, -3, 1, -5, 1, 3, 1),
+                    new Wall(TileType.Wall, TileMesh.Wall2, -2, 0, -5),
+                    new IONode(3, 0, 0, 0, TileMesh.IONode1, -2, 0, -6),
+                }),
+
+            3 => new LevelSave(
+                BackgroundType.Boxy,
+                1,
+                new List<SceneTile>
+                {
+                    new Wall(TileType.Wall, TileMesh.Wall2, -1, -1, -1),
+                    new Wall(TileType.Wall, TileMesh.Wall2, 1, -1, -1),
+                    new Wall(TileType.Wall, TileMesh.Wall2, 0, -1, 0, 3, 1, 1),
+
+                    new Wall(TileType.Wall, TileMesh.Wall2, -1, -1, -3),
+
+                    new Wall(TileType.Wall, TileMesh.Wall2, -1, -1, -5),
+
+                    new Wall(TileType.Wall, TileMesh.Wall2, -4, -1, -1),
+
+                    new Wall(TileType.Wall, TileMesh.Wall2, -3, -1, 0),
+
+                    new Wall(TileType.Wall, TileMesh.Wall2, -4, -1, -3),
+                    new Wall(TileType.Wall, TileMesh.Wall3, -5, 0, -3, 1, 3, 1),
+
+                    new IONode(4, 0, 0, 0, TileMesh.IONode1, -4, -1, -5),
+
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -1, -1, -4),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -1, -1, -2),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -2, -1, 0),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -2, -1, -1),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -3, -1, -1),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -4, -1, -4),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -4, -1, -2),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -3, -1, -3),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -2, -1, -3),
+                }),
+
+            4 => new LevelSave(
+                BackgroundType.Boxy,
+                1,
+                new List<SceneTile>
+                {
+                    new Wall(TileType.Wall, TileMesh.Wall3, 0, -1, 0),
+                    new Wall(TileType.Wall, TileMesh.Wall2, 0, -1, 1),
+
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, 0, -1, 2),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, 0, -1, 3),
+
+                    new Wall(TileType.Wall, TileMesh.Wall3, 0, -1, 4),
+
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -1, -1, 4),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -2, -1, 4),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -3, -1, 4),
+
+                    new IONode(5, 0, 0, 0, TileMesh.IONode1, -4, -1, 4),
+
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -4, -1, 3),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -4, -1, 2),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -4, -1, 1),
+
+                    new Wall(TileType.Wall, TileMesh.Wall3, -4, -1, 0),
+
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -3, -1, 0),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -2, -1, 0),
+
+                    new Wall(TileType.Wall, TileMesh.Wall2, -1, -1, 0),
+                    new Wall(TileType.Wall, TileMesh.Wall2, 1, -1, 0),
+
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, 2, -1, 0),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, 3, -1, 0),
+
+                    new Wall(TileType.Wall, TileMesh.Wall3, 4, -1, 0),
+
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, 4, -1, -1),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, 4, -1, -2),
+
+                    new Wall(TileType.Wall, TileMesh.Wall3, 4, -1, -3),
+                    new Wall(TileType.Wall, TileMesh.Wall3, 3, -1, -4),
+
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, 2, -1, -4),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, 1, -1, -4),
+
+                    new Wall(TileType.Wall, TileMesh.Wall3, 0, -1, -4),
+
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, 0, -1, -3),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, 0, -1, -2),
+
+                    new Wall(TileType.Wall, TileMesh.Wall2, 0, -1, -1),
+                }),
+
+            5 => new LevelSave(
+                BackgroundType.Boxy,
+                1,
+                new List<SceneTile>
+                {
+                    new Wall(TileType.Wall, TileMesh.Wall3, 0, -1, 0),
+                    new Wall(TileType.Wall, TileMesh.Wall1, 0, -2, 0),
+                    new Wall(TileType.Wall, TileMesh.Wall2, 0, -2, 1),
+                    new Wall(TileType.Wall, TileMesh.Wall2, 0, 0, -1),
+                    new Wall(TileType.Wall, TileMesh.Wall2, 0, 0, -2),
+                    new Wall(TileType.Wall, TileMesh.Wall2, -1, 0, 0),
+
+                    new Wall(TileType.Wall, TileMesh.Wall4, -7, 0, -3),
+                    new Wall(TileType.Wall, TileMesh.Wall2, -6, 0, -3),
+                    new Wall(TileType.Wall, TileMesh.Wall2, -5, 0, -3),
+
+                    new Wall(TileType.Wall, TileMesh.Wall2, -8, 1, -3, 3, 1, 1),
+
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -2, 0, 0),
+
+                    new Wall(TileType.Wall, TileMesh.Wall3, -3, 0, 1),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -3, 0, 0),
+                    new Wall(TileType.Wall, TileMesh.Wall3, -4, 0, 0),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -4, 0, 1),
+                    new Wall(TileType.Wall, TileMesh.Wall3, -5, 0, 1),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -5, 0, 0),
+                    new Wall(TileType.Wall, TileMesh.Wall3, -6, 0, 0),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -6, 0, 1),
+
+                    new IONode(6, 0, 0, 0, TileMesh.IONode1, -3, 0, 2),
+
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -5, 0, -1),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -5, 0, -2),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -6, 0, -1),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -6, 0, -2),
+                }),
+
+            6 => new LevelSave(
+                BackgroundType.Boxy,
+                1,
+                new List<SceneTile>
+                {
+                    new Wall(TileType.Wall, TileMesh.Wall3, 0, -1, 0),
+                    new IONode(7, 0, 0, 0, TileMesh.IONode1, 0, -1, -2),
+
+                    new Wall(TileType.Wall, TileMesh.Wall2, 0, 0, 1),
+                    new Wall(TileType.Wall, TileMesh.Wall3, 1, 0, 1),
+                    new Wall(TileType.Wall, TileMesh.Wall2, 1, 0, 0),
+
+                    new Wall(TileType.Wall, TileMesh.Wall2, 0, 1, 2),
+                    new Wall(TileType.Wall, TileMesh.Wall2, 1, 1, 2),
+                    new Wall(TileType.Wall, TileMesh.Wall3, 2, 1, 2),
+                    new Wall(TileType.Wall, TileMesh.Wall2, 2, 1, 1),
+                    new Wall(TileType.Wall, TileMesh.Wall2, 2, 1, 0),
+
+                    new Wall(TileType.Wall, TileMesh.Wall2, 3, 2, 1, 1, 1, 3),
+                    new Wall(TileType.Wall, TileMesh.Wall3, 3, 2, 3),
+                    new Wall(TileType.Wall, TileMesh.Wall2, 1, 2, 3, 3, 1, 1),
+
+                    new Wall(TileType.Wall, TileMesh.Wall2, -4, 0, 1, 3, 1, 1),
+                    new Wall(TileType.Wall, TileMesh.Wall2, -4, 1, 2, 3, 1, 1),
+                    new Wall(TileType.Wall, TileMesh.Wall2, -4, 2, 3, 3, 1, 1),
+
+                    new Wall(TileType.Wall, TileMesh.Wall2, -4, 0, 1, 3, 1, 1),
+                    new Wall(TileType.Wall, TileMesh.Wall2, -4, 1, 2, 3, 1, 1),
+                    new Wall(TileType.Wall, TileMesh.Wall2, -4, 2, 3, 3, 1, 1),
+
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -2, 0, 1),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -1, 0, 1),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -2, 1, 2),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -1, 1, 2),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -2, 2, 3),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -1, 2, 3),
+                }),
+
+            7 => new LevelSave(
+                BackgroundType.Boxy,
+                1,
+                new List<SceneTile>
+                {
+                    new Wall(TileType.Wall, TileMesh.Wall2, -2, 0, 0),
+
+                    new Wall(TileType.Wall, TileMesh.Wall4, -1, -2, 0),
+                    new Wall(TileType.Wall, TileMesh.Wall4, -1, -1, 0),
+                    new Wall(TileType.Wall, TileMesh.Wall2, -1, 0, 0),
+
+                    new Wall(TileType.Wall, TileMesh.Wall4, 0, -2, 0),
+
+                    new Wall(TileType.Wall, TileMesh.Wall2, 1, -2, 0),
+
+                    new Wall(TileType.Wall, TileMesh.Wall4, 2, -2, 0),
+                    new Wall(TileType.Wall, TileMesh.Wall4, 2, -1, 0),
+                    new Wall(TileType.Wall, TileMesh.Wall2, 2, 0, 0),
+
+                    new Wall(TileType.Wall, TileMesh.Wall2, 4, -2, 0),
+                    new Wall(TileType.Wall, TileMesh.Wall2, 3, 0, 0),
+
+                    new Wall(TileType.Wall, TileMesh.Wall4, 5, -2, 0),
+                    new Wall(TileType.Wall, TileMesh.Wall4, 5, -1, 0),
+                    new Wall(TileType.Wall, TileMesh.Wall2, 5, 0, 0),
+
+                    new Wall(TileType.Wall, TileMesh.Wall3, 0, -1, 0),
+                    new IONode(8, 0, 0, 0, TileMesh.IONode1, 5, -2, 1),
+                }),
+
+            8 => new LevelSave(
+                BackgroundType.Boxy,
+                2,
+                new List<SceneTile>
+                {
+                    new Wall(TileType.Wall, TileMesh.Wall2, 6, -2, 1),
+                    new Wall(TileType.Wall, TileMesh.Wall2, 6, -2, 2),
+                    new Wall(TileType.Wall, TileMesh.Wall2, 5, -2, 2, 1, 1, 3),
+
+                    new Wall(TileType.Wall, TileMesh.Wall2, 4, -1, 5),
+                    new Wall(TileType.Wall, TileMesh.Wall1, 5, -1, 4),
+                    new Wall(TileType.Wall, TileMesh.Wall1, 6, -1, 3),
+
+                    new Wall(TileType.Wall, TileMesh.Wall3, 6, -1, 0),
+                    new Wall(TileType.Wall, TileMesh.Wall3, 4, -1, 0),
+                    new Wall(TileType.Wall, TileMesh.Wall3, 2, -1, 0),
+
+                    new Wall(TileType.Wall, TileMesh.Wall3, 0, -1, -3),
+                    new Wall(TileType.Wall, TileMesh.Wall3, 0, -1, -6),
+
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, 0, -1, -1),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, 0, -1, -2),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, 0, -1, -4),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, 0, -1, -5),
+
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, 1, -1, 0),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, 3, -1, 0),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, 5, -1, 0),
+
+                    new Wall(TileType.Wall, TileMesh.Wall3, 4, 0, 3, 1, 3, 1),
+
+                    new Wall(TileType.Wall, TileMesh.Wall3, 6, 0, 5),
+                    new Wall(TileType.Wall, TileMesh.Wall3, 5, 0, 4),
+                    new Wall(TileType.Wall, TileMesh.Wall3, 6, 0, 3),
+                    new Wall(TileType.Wall, TileMesh.Wall3, 7, 0, 0),
+                    new Wall(TileType.Wall, TileMesh.Wall3, -1, 0, 0, 1, 3, 1),
+
+                    new Wall(TileType.Wall, TileMesh.Wall3, 0, -1, 0),
+                    new IONode(9, 0, 0, 0, TileMesh.IONode1, 5, -1, 5),
+                }),
+
+            9 => new LevelSave(
+                BackgroundType.Boxy,
+                2,
+                new List<SceneTile>
+                {
+                    new Wall(TileType.Wall, TileMesh.Wall3, -4, 0, 0, 1, 3, 1),
+
+                    new Piston(TileType.PushPiston, TileMesh.Piston1, -3, -1, 0),
+
+                    new Wall(TileType.Wall, TileMesh.Wall2, -1, -1, 0),
+                    new Wall(TileType.Wall, TileMesh.Wall2, 1, -1, 0),
+                    new Wall(TileType.Wall, TileMesh.Wall1, -3, -1, 5),
+                    new Wall(TileType.Wall, TileMesh.Wall3, -1, -1, 5),
+
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -2, -1, 0),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -2, -1, 5),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -1, -1, 4),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -1, -1, 3),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -1, -1, 2),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -1, -1, 1),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, 3, -1, 2),
+
+                    new Wall(TileType.Wall, TileMesh.Wall4, 3, -1, -1),
+                    new Wall(TileType.Wall, TileMesh.Wall2, 3, -1, 0),
+                    new Wall(TileType.Wall, TileMesh.Wall2, 3, -1, 1),
+                    new Wall(TileType.Wall, TileMesh.Wall2, 3, -1, 4, 1, 1, 3),
+
+                    new Wall(TileType.Wall, TileMesh.Wall2, 2, 0, 0),
+                    new Wall(TileType.Wall, TileMesh.Wall4, 2, -1, 0),
+                    new Wall(TileType.Wall, TileMesh.Wall2, 3, 0, -1),
+
+                    new Wall(TileType.Wall, TileMesh.Wall3, 0, -1, 0),
+                    new IONode(10, 0, 0, 0, TileMesh.IONode1, -3, 0, 5),
+
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -3, -1, 4),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -3, -1, 3),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -3, -1, 2),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -3, -1, 1),
+                }),
+
+            10 => new LevelSave(
+                BackgroundType.Boxy,
+                2,
+                new List<SceneTile>
+                {
+                    new Wall(TileType.Wall, TileMesh.Wall2, 3, -1, 0),
+                    new Wall(TileType.Wall, TileMesh.Wall2, 2, -1, 0),
+                    new Piston(TileType.PushPiston, TileMesh.Piston1, 1, -1, 0),
+                    new Wall(TileType.Wall, TileMesh.Wall2, -3, -1, 0),
+                    new Wall(TileType.Wall, TileMesh.Wall2, -1, -1, 0),
+
+                    new Wall(TileType.Wall, TileMesh.Wall1, 1, -1, -2),
+                    new Wall(TileType.Wall, TileMesh.Wall2, 0, -1, -2),
+                    new Wall(TileType.Wall, TileMesh.Wall1, 0, -1, -3),
+
+                    new Wall(TileType.Wall, TileMesh.Wall4, 1, -1, 1),
+                    new Wall(TileType.Wall, TileMesh.Wall2, 1, 0, 2),
+                    new Wall(TileType.Wall, TileMesh.Wall2, 1, 0, 1),
+
+                    new Wall(TileType.Wall, TileMesh.Wall3, 1, 0, -2),
+
+                    new Wall(TileType.Wall, TileMesh.Wall3, 0, -1, 0),
+                    new IONode(11, 0, 0, 0, TileMesh.IONode1, 0, 0, -3),
+
+                    new Wall(TileType.Wall, TileMesh.Wall1, -3, -1, 1),
+                    new Wall(TileType.Wall, TileMesh.Wall1, -3, 0, 1),
+                    new Wall(TileType.Wall, TileMesh.Wall1, -3, 1, 1),
+                    new Wall(TileType.Wall, TileMesh.Wall3, -3, 2, 1),
+
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -2, -1, 0),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, 0, -1, -1),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, 1, -1, -1),
+                }),
+
+            11 => new LevelSave(
+                BackgroundType.Boxy,
+                2,
+                new List<SceneTile>
+                {
+                    new IONode(12, 0, 0, 0, TileMesh.IONode1, 3, -1, 8),
+
+                    new Wall(TileType.Wall, TileMesh.Wall2, 3, -1, 5),
+                    new Wall(TileType.Wall, TileMesh.Wall2, 4, -1, 3),
+                    new Wall(TileType.Wall, TileMesh.Wall2, 3, -1, 3),
+                    new Wall(TileType.Wall, TileMesh.Wall2, 2, -1, 4),
+                    new Wall(TileType.Wall, TileMesh.Wall2, 1, -1, 5),
+
+                    new Piston(TileType.PivotPiston, TileMesh.Piston2, 1, -1, 0),
+                    new Piston(TileType.PivotPiston, TileMesh.Piston2, 2, -1, 0),
+                    new Piston(TileType.PivotPiston, TileMesh.Piston2, 3, -1, 0),
+
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, 1, -1, 1),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, 1, -1, 2),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, 1, -1, 3),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, 1, -1, 4),
+
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, 2, -1, 1),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, 2, -1, 2),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, 2, -1, 3),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, 2, -1, 5),
+
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, 3, -1, 1),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, 3, -1, 2),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, 3, -1, 4),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, 3, -1, 6),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, 3, -1, 7),
+
+                    new Wall(TileType.Wall, TileMesh.Wall3, 0, -1, 0),
+                }),
+
+            12 => new LevelSave(
+                BackgroundType.Boxy,
+                2,
+                new List<SceneTile>
+                {
+                    new Wall(TileType.Wall, TileMesh.Wall2, 1, -1, 0),
+                    new Piston(TileType.PivotPiston, TileMesh.Piston2, 2, -1, 0),
+                    new Wall(TileType.Wall, TileMesh.Wall3, 3, 0, 0, 1, 3, 1),
+
+                    new Wall(TileType.Wall, TileMesh.Wall2, 0, -1, 1),
+                    new Piston(TileType.PivotPiston, TileMesh.Piston2, 0, -1, 2),
+                    new Wall(TileType.Wall, TileMesh.Wall3, 0, 0, 3, 1, 3, 1),
+
+                    new Wall(TileType.Wall, TileMesh.Wall2, -1, -1, 0),
+                    new Piston(TileType.PivotPiston, TileMesh.Piston2, -2, -1, 0),
+                    new Wall(TileType.Wall, TileMesh.Wall3, -3, 0, 0, 1, 3, 1),
+
+                    new Wall(TileType.Wall, TileMesh.Wall2, 0, -1, -1),
+                    new Piston(TileType.PivotPiston, TileMesh.Piston2, 0, -1, -2),
+                    new Wall(TileType.Wall, TileMesh.Wall3, 0, 0, -3, 1, 3, 1),
+
+                    new Wall(TileType.Wall, TileMesh.Wall3, 0, -1, 0),
+                    new IONode(13, 0, 0, 0, TileMesh.IONode1, 0, -1, -4),
+                }),
+
+            13 => new LevelSave(
+                BackgroundType.Boxy,
+                2,
+                new List<SceneTile>
+                {
+                    new IONode(14, 0, 0, 0, TileMesh.IONode1, 1, -1, 5),
+                    new Piston(TileType.PushPiston, TileMesh.Piston1, 2, -1, 2),
+                    new Wall(TileType.Wall, TileMesh.Wall2, 1, -1, 2),
+                    new Wall(TileType.Wall, TileMesh.Wall1, 2, -1, 0),
+                    new Piston(TileType.PushPiston, TileMesh.Piston1, 1, -1, 0),
+                    new Wall(TileType.Wall, TileMesh.Wall1, -1, -1, 2),
+                    new Wall(TileType.Wall, TileMesh.Wall3, 0, -1, 0),
+                    new Wall(TileType.Wall, TileMesh.Wall1, -1, -1, 0),
+                    new Wall(TileType.Wall, TileMesh.Wall2, -2, -1, 0),
+                    new Wall(TileType.Wall, TileMesh.Wall3, 3, 0, 2),
+                    new Wall(TileType.Wall, TileMesh.Wall1, 3, -1, 2),
+                    new Piston(TileType.PivotPiston, TileMesh.Piston2, 2, 0, 0),
+                    new Wall(TileType.Wall, TileMesh.Wall3, -1, 0, 2),
+                    new Wall(TileType.Wall, TileMesh.Wall3, -1, 0, 0),
+
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, 1, -1, 1),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, 1, -1, 3),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, 1, -1, 4),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, 2, -1, 1),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -1, 0, 1),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, 0, -1, 2),
+                }),
+
+            14 => new LevelSave(
+                BackgroundType.Boxy,
+                2,
+                new List<SceneTile>
+                {
+                    new Piston(TileType.PivotPiston, TileMesh.Piston2, -6, -1, 0),
+                    new Wall(TileType.Wall, TileMesh.Wall1, -4, -1, -1),
+                    new Wall(TileType.Wall, TileMesh.Wall1, -6, -1, -1),
+                    new Wall(TileType.Wall, TileMesh.Wall1, -5, -1, -1),
+                    new Wall(TileType.Wall, TileMesh.Wall2, -5, -1, 0),
+                    new Wall(TileType.Wall, TileMesh.Wall2, -4, -1, 0),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -3, -1, 0),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -2, -1, 0),
+                    new Wall(TileType.Wall, TileMesh.Wall1, -2, -1, -1),
+                    new Wall(TileType.Wall, TileMesh.Wall1, -1, -1, -1),
+                    new Wall(TileType.Wall, TileMesh.Wall2, -1, -1, 0),
+
+
+                    new Wall(TileType.Wall, TileMesh.Wall3, 0, -1, 0),
+
+                    new Wall(TileType.Wall, TileMesh.Wall1, -6, 0, -1),
+                    new Wall(TileType.Wall, TileMesh.Wall2, -5, 0, -1),
+                    new Wall(TileType.Wall, TileMesh.Wall1, -4, 0, -1),
+                    new Wall(TileType.Wall, TileMesh.Wall1, -2, 0, -1),
+                    new Wall(TileType.Wall, TileMesh.Wall2, -1, 0, -1),
+
+                    new IONode(15, 0, 0, 0, TileMesh.IONode1, -7, 1, -1),
+                    new Wall(TileType.Wall, TileMesh.Wall1, -7, 0, -1),
+                    new Wall(TileType.Wall, TileMesh.Wall1, -7, -1, -1),
+
+                    new Wall(TileType.Wall, TileMesh.Wall3, -6, 1, -1),
+                    new Wall(TileType.Wall, TileMesh.Wall3, -4, 1, -1),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -3, 1, -1),
+                    new Wall(TileType.Wall, TileMesh.Wall3, -2, 1, -1),
+                }),
+
+            15 => new LevelSave(
+                BackgroundType.Boxy,
+                2,
+                new List<SceneTile>
+                {
+                    new Wall(TileType.Wall, TileMesh.Wall3, -8, -1, -2),
+                    new Wall(TileType.Wall, TileMesh.Wall2, -8, -1, 1),
+                    new Wall(TileType.Wall, TileMesh.Wall2, -4, -1, -2),
+                    new Wall(TileType.Wall, TileMesh.Wall2, -8, -1, 2),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -8, -1, -1),
+                    new Wall(TileType.Wall, TileMesh.Wall2, -3, -1, -2),
+                    new Wall(TileType.Wall, TileMesh.Wall2, -2, -1, -2),
+                    new Wall(TileType.Wall, TileMesh.Wall2, -4, -1, 2),
+                    new Wall(TileType.Wall, TileMesh.Wall2, -3, -1, 2),
+                    new Wall(TileType.Wall, TileMesh.Wall2, -2, -1, 2),
+
+                    new Wall(TileType.Wall, TileMesh.Wall3, 2, -1, 0),
+                    new Piston(TileType.PivotPiston, TileMesh.Piston2, -1, -1, 0),
+                    new Wall(TileType.Wall, TileMesh.Wall2, -2, -1, 0),
+
+                    new Wall(TileType.Wall, TileMesh.Wall3, 0, -1, 0),
+                    new IONode(16, 0, 0, 0, TileMesh.IONode1, -8, -1, 0),
+
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, 1, -1, 0),
+
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -2, -1, 1),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -2, -1, -1),
+
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -3, -1, -1),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -3, -1, 0),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -3, -1, 1),
+
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -4, -1, -1),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -4, -1, 0),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -4, -1, 1),
+
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -5, -1, -2),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -5, -1, 0),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -5, -1, 2),
+
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -6, -1, -2),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -6, -1, 0),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -6, -1, 2),
+
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -7, -1, -2),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -7, -1, 0),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -7, -1, 2),
+
+                }),
+
+            16 => new LevelSave(
+                BackgroundType.Boxy,
+                2,
+                new List<SceneTile>
+                {
+                    new Wall(TileType.Wall, TileMesh.Wall1, 3, -1, 0),
+                    new Piston(TileType.PivotPiston, TileMesh.Piston2, 1, -1, 0),
+                    new Wall(TileType.Wall, TileMesh.Wall1, 3, -1, -2),
+                    new Wall(TileType.Wall, TileMesh.Wall3, 0, -1, 0),
+                    new Piston(TileType.PivotPiston, TileMesh.Piston2, 0, -1, -1),
+                    new Wall(TileType.Wall, TileMesh.Wall1, 3, -1, -5),
+                    new Wall(TileType.Wall, TileMesh.Wall1, -2, -1, 0),
+                    new Wall(TileType.Wall, TileMesh.Wall2, -2, -1, -1),
+                    new Wall(TileType.Wall, TileMesh.Wall2, -2, -1, -2),
+
+                    new IONode(-1, 0, 0, 0, TileMesh.IONode1, -2, -1, -5),
+
+                    new Wall(TileType.Wall, TileMesh.Wall3, 3, 0, 0),
+                    new Wall(TileType.Wall, TileMesh.Wall3, 3, 0, -2),
+                    new Wall(TileType.Wall, TileMesh.Wall3, 3, 0, -5),
+                    new Wall(TileType.Wall, TileMesh.Wall1, -2, 0, 0),
+                    new Wall(TileType.Wall, TileMesh.Wall3, -2, 1, 0),
+
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, 2, -1, 0),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -1, -1, -1),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, 3, 0, -1),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, 3, 0, -3),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, 3, 0, -4),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -2, -1, -3),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -2, -1, -4),
+
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -1, -1, -2),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, 0, -1, -2),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, 1, -1, -2),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, 2, -1, -2),
+
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, -1, -1, -5),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, 0, -1, -5),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, 1, -1, -5),
+                    new Wall(TileType.Scaffold, TileMesh.Wall5, 2, -1, -5),
+                }),
+
 
             _ => new LevelSave(BackgroundType.Boxy, 0, new List<SceneTile>()),
         };

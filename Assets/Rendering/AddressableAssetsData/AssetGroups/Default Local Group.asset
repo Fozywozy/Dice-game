@@ -97,6 +97,74 @@ MonoBehaviour:
     m_Address: System:LightningBolt
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 95a83f3ff075b4766aff47d1d2e09231
+    m_Address: Tile:Pad
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: ec57dfa49c3c144ceb223158b983d1c7
+    m_Address: Tile:Bridge
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 3a899349dded7440db4601d3d742ee63
+    m_Address: Opaque:Dull green
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 19c16bcef815c4fda9014a095b8408f8
+    m_Address: Tile:Pillar
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 29556bfcb3c764dca9fd9ef53c5681e8
+    m_Address: Tile:Scaffold
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 54921d1ecc89d49a7aa05c1b0006cc68
+    m_Address: Tile:Pivot Piston
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 7f609e90067c14bbdb93e7589af0999f
+    m_Address: Tile:Push Piston
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 72c25f9bce5db47cba63a5624c8215c1
+    m_Address: Transparent:Dull yellow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: d224185a02bd34a3e91dfe40c600dddc
+    m_Address: Transparent:Dull gray
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 091c7555830934a01a1228675a32424a
+    m_Address: Transparent:Dull green
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 3d5c2034b9cab47a4a2b51a58842c78d
+    m_Address: Opaque:Dull yellow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 817ddb2f0affb4a59b7a6206763daf1a
+    m_Address: Transparent:Dull red
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 4d18acf3c928d4b1ebd274062cd7fd4d
+    m_Address: TO:Dull gray
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 434762eec1bae46ffadda8fc79b3cc50
+    m_Address: TO:Dull green
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: d4d2c06dee774422183d677c2915d128
+    m_Address: TO:Dull red
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 4baa6785936404d6ca59c3be80fa803b
+    m_Address: TO:Dull yellow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: fc1df983163b6427d8d7ce1c4acd915e
+    m_Address: TO:Shiny gray
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 39308582621394149a08b16ac1c445a4, type: 2}
   m_SchemaSet:
